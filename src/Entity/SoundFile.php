@@ -17,8 +17,26 @@ class SoundFile
      */
     private $id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=SoundPackage::class, inversedBy="soundFiles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $soundPackage;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getSoundPackage(): ?SoundPackage
+    {
+        return $this->soundPackage;
+    }
+
+    public function setSoundPackage(?SoundPackage $soundPackage): self
+    {
+        $this->soundPackage = $soundPackage;
+
+        return $this;
     }
 }
