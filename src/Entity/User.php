@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -47,9 +49,15 @@ class User
      */
     private $role = [];
 
+    /**
+     * @ORM\OneToMany(targetEntity=SoundPackage::class, mappedBy="createdBy")
+     */
+    private $soundPackages;
+
     public function __construct()
     {
         $roles[] = 'ROLE_USER';
+        $this->soundPackages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,6 +121,37 @@ class User
     public function setRole(array $role): self
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SoundPackage[]
+     */
+    public function getSoundPackages(): Collection
+    {
+        return $this->soundPackages;
+    }
+
+    public function addSoundPackage(SoundPackage $soundPackage): self
+    {
+        if (!$this->soundPackages->contains($soundPackage)) {
+            $this->soundPackages[] = $soundPackage;
+            $soundPackage->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSoundPackage(SoundPackage $soundPackage): self
+    {
+        if ($this->soundPackages->contains($soundPackage)) {
+            $this->soundPackages->removeElement($soundPackage);
+            // set the owning side to null (unless already changed)
+            if ($soundPackage->getCreatedBy() === $this) {
+                $soundPackage->setCreatedBy(null);
+            }
+        }
 
         return $this;
     }

@@ -22,6 +22,12 @@ class SoundPackage
      */
     private $soundFilepath;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="soundPackages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $createdBy;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +41,18 @@ class SoundPackage
     public function setSoundFilepath(string $soundFilepath): self
     {
         $this->soundFilepath = $soundFilepath;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }
