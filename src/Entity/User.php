@@ -42,6 +42,16 @@ class User
      */
     private $passwordEncoded;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $role = [];
+
+    public function __construct()
+    {
+        $roles[] = 'ROLE_USER';
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +101,18 @@ class User
     public function setPasswordEncoded(string $passwordEncoded): self
     {
         $this->passwordEncoded = $passwordEncoded;
+
+        return $this;
+    }
+
+    public function getRole(): ?array
+    {
+        return $this->role;
+    }
+
+    public function setRole(array $role): self
+    {
+        $this->role = $role;
 
         return $this;
     }
