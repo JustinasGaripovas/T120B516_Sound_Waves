@@ -9,12 +9,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
  *     collectionOperations={"get"},
- *     itemOperations={"get"}
+ *     itemOperations={"get"},
+ *     normalizationContext={"groups"={"read"}},
+ *     denormalizationContext={"groups"={"write"}}
  * )
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
@@ -31,11 +34,13 @@ class User
     private $id;
 
     /**
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $firstName;
 
     /**
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $secondName;
@@ -55,11 +60,13 @@ class User
     private $passwordEncoded;
 
     /**
+     * @Groups({"read", "write"})
      * @ORM\Column(type="json", nullable=true)
      */
     private $role = [];
 
     /**
+     * @Groups({"read", "write"})
      * @ORM\OneToMany(targetEntity=SoundPackage::class, mappedBy="createdBy")
      */
     private $soundPackages;
