@@ -9,9 +9,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read"}},
+ *     denormalizationContext={"groups"={"write"}}
+ * )
+ *
  * @ORM\Entity(repositoryClass=SoundPackageRepository::class)
  */
 class SoundPackage
@@ -27,25 +32,41 @@ class SoundPackage
     private $id;
 
     /**
+     * @Groups({"write"})
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="soundPackages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $createdBy;
 
     /**
+     * @Groups({"write"})
      * @ORM\OneToMany(targetEntity=SoundFile::class, mappedBy="soundPackage")
      */
     private $soundFiles;
 
     /**
+     * @Groups({"write", "read"})
      * @ORM\ManyToOne(targetEntity=SoundPackage::class, inversedBy="childSoundPackages")
      */
     private $soundPackage;
 
     /**
+     * @Groups({"write"})
      * @ORM\OneToMany(targetEntity=SoundPackage::class, mappedBy="soundPackage")
      */
     private $childSoundPackages;
+
+    /**
+     * @Groups({"write", "read"})
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @Groups({"write"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $description;
 
     public function __construct()
     {
@@ -140,6 +161,30 @@ class SoundPackage
                 $childSoundPackage->setSoundPackage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
