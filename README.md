@@ -39,3 +39,4 @@ If there is no database initialized do:
 * We DO NOT APPROVE self made PR
 * PR's should be as short as possible
 * PR's can be denied if it's too long / not up to the standarts
+* We follow [PSR-Recommendations](https://www.php-fig.org/psr/)
