@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <p>This is an example of a new components in VueJs</p>
+  <div class="container-fluid">
+   <MenuComponent></MenuComponent>
   </div>
 </template>
 <script>
+import MenuComponent from "./MenuComponent";
 export default {
-  name: "app"
+  name: "App",
+  components: {MenuComponent}
 }
 </script>
 <style scoped>
