@@ -28,7 +28,6 @@ Update database scheme with:
 * `npm run watch`
 
 ### Running the app
-
 * `symfony serve`
 
 ### Documentation
