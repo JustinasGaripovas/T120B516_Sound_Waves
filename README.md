@@ -3,14 +3,14 @@
 ## Installation
 
 ### Repository setup
-* Clone repository
-`git clone https://github.com/JustinasGaripovas/T120B516_Sound_Waves.git`
-* Go to repository folder
-`cd T120B516_Sound_Waves/`
+Clone repository
+* `git clone https://github.com/JustinasGaripovas/T120B516_Sound_Waves.git`
+Go to repository folder
+* `cd T120B516_Sound_Waves/`
 
 ### Install composer dependancies
-`composer install --no-interaction`
-`
+* `composer install --no-interaction`
+
 ### Update .env file
 * Add your mysql connection credentials etc.
 * Example `DATABASE_URL=mysql://MYSQL_USERNAME:MYSQL_PASSWORD@127.0.0.1:3306/DATABASE_NAME?serverVersion=5.7`
@@ -29,7 +29,7 @@ If there is no database initialized do:
 
 ### Running the app
 
-`symfony serve`
+* `symfony serve`
 
 ### Documentation
 [API documentation](http://localhost:8000/api)
