@@ -9,16 +9,16 @@ Go to repository folder
 * `cd T120B516_Sound_Waves/`
 
 ### Install composer dependancies
-* `composer install --no-interaction`
 
 ### Update .env file
 * Add your mysql connection credentials etc.
 * Example `DATABASE_URL=mysql://MYSQL_USERNAME:MYSQL_PASSWORD@127.0.0.1:3306/DATABASE_NAME?serverVersion=5.7`
 
 ### Prepare database
-
-If there is no database initialized do:
+If .env database name is new, and does not have mysql database initialized use: 
 * `bin/console doctrine:database:create`
+
+Update database scheme with: 
 * `bin/console doctrine:migrations:migrate` 
 
 ### Prepare frontend 
