@@ -32,10 +32,9 @@ If there is no database initialized do:
 `symfony serve`
 
 ### Documentation
-(API documentation)[http://localhost:8000/api]
-
+[API documentation](http://localhost:8000/api)
 ## General rules
-* We follow (Semantic commit message guides)[https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716] when commiting
+* We follow [Semantic commit message guides](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716) when commiting
 * We branch out from master to complete our features
 * We DO NOT APPROVE self made PR
 * PR's should be as short as possible
