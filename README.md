@@ -37,5 +37,5 @@ Update database scheme with:
 * We branch out from master to complete our features
 * We DO NOT APPROVE self made PR
 * PR's should be as short as possible
-* PR's can be denied if it's too long / not up to the standarts
+* PR can be denied if it's too long / not up to the standarts
 * We follow [PSR-Recommendations](https://www.php-fig.org/psr/)
