@@ -1,70 +1,19 @@
 <template>
-  <div>
-    <div id="viewport">
-      <!-- Sidebar -->
-      <div id="sidebar">
-        <header>
-          <a href="#">My App</a>
-        </header>
-        <ul class="nav">
-          <li>
-            <a href="#">
-              <i class="zmdi zmdi-view-dashboard"></i> Dashboard
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="zmdi zmdi-link"></i> Shortcuts
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="zmdi zmdi-widgets"></i> Overview
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="zmdi zmdi-calendar"></i> Events
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="zmdi zmdi-info-outline"></i> About
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="zmdi zmdi-settings"></i> Services
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="zmdi zmdi-comment-more"></i> Contact
-            </a>
-          </li>
-        </ul>
-      </div>
-      <!-- Content -->
-      <div id="content">
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <ul class="nav navbar-nav navbar-right">
-              <li>
-                <a href="#"><i class="zmdi zmdi-notifications text-danger"></i>
-                </a>
-              </li>
-              <li><a href="#">Test User</a></li>
-            </ul>
-          </div>
-        </nav>
-        <div class="container-fluid">
-          <h1>Simple Sidebar</h1>
-          <p>
-            Make sure to keep all page content within the
-            <code>#content</code>.
-          </p>
-        </div>
-      </div>
+  <div class="container-fluid">
+    <input type="checkbox" id="check">
+    <label for="check">
+      <i class="fas fa-bars" id="btn"></i>
+      <i class="fas fa-times" id="cancel"></i>
+    </label>
+    <div class="sidebar">
+      <header>My App</header>
+      <ul>
+        <li><a href="#"><i class="fa fa-qrcode"></i>Dashbord</a></li>
+        <li><a href="#"><i class="fa fa-link"></i>Text</a></li>
+        <li><a href="#"><i class="fa fa-stream"></i>Text</a></li>
+        <li><a href="#"><i class="fa fa-sliders-h"></i>Text</a></li>
+        <li><a href="#"><i class="fa fa-envelope"></i>Text</a></li>
+      </ul>
     </div>
   </div>
 </template>
@@ -76,82 +25,96 @@ name: "MenuComponent"
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500');
-
-body {
-  overflow-x: hidden;
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-}
-
-/* Toggle Styles */
-
-#viewport {
-  padding-left: 250px;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-#content {
-  width: 100%;
-  position: relative;
-  margin-right: 0;
-}
-
-/* Sidebar Styles */
-
-#sidebar {
-  z-index: 1000;
-  position: fixed;
-  left: 250px;
-  width: 250px;
-  height: 100%;
-  margin-left: -250px;
-  overflow-y: auto;
-  background: #37474F;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-#sidebar header {
-  background-color: #263238;
-  font-size: 20px;
-  line-height: 52px;
-  text-align: center;
-}
-
-#sidebar header a {
-  color: #fff;
-  display: block;
+*{
+  margin: 0;
+  padding: 0;
+  list-style: none;
   text-decoration: none;
 }
+.sidebar{
+  position: fixed;
+  left: -15.625em;
+  width: 15.625em;
+  height: 100%;
+  background: #042331;
+  transition: all .5s ease;
+}
 
-#sidebar header a:hover {
+.sidebar header{
+  font-size: 1.375em;
   color: #fff;
+  text-align: center;
+  line-height: 4.375em;
+  background: #063146;
+  user-select: none;
 }
 
-#sidebar .nav{
-
+.sidebar ul a{
+  display: block;
+  height: 100%;
+  width: 100%;
+  line-height: 4.0625em;
+  font-size: 1.25em;
+  color: #fff;
+  padding-left: 2.5em;
+  box-sizing: border-box;
+  border-top: 0.0625em solid rgba(255,255,255,.1);
+  border-bottom: 0.0625em solid black;
+  transition: .4s;
 }
 
-#sidebar .nav a{
-  background: none;
-  border-bottom: 1px solid #455A64;
-  color: #CFD8DC;
-  font-size: 14px;
-  padding: 16px 24px;
+ul li:hover a{
+  padding-left: 3.125em;
 }
 
-#sidebar .nav a:hover{
-  background: none;
-  color: #ECEFF1;
+.sidebar ul a i{
+  margin-right: 1em;
 }
 
-#sidebar .nav a i{
-  margin-right: 16px;
+#check{
+  display:none;
+}
+
+label #btn,label #cancel{
+  position: absolute;
+  cursor: pointer;
+  background: #042331;
+  border-radius: 0.1875em;
+}
+
+label{
+  position: absolute;
+}
+
+label #btn{
+  left: 1.1428em;
+  top: 1.5625em;
+  font-size: 2.1875em;
+  color: #fff;
+  padding: 0.375em 0.75em;
+  transition: all .5s;
+}
+
+label #cancel{
+  z-index: 1111;
+  left: -5.1em;
+  top: 1.0625em;
+  font-size: 1.875em;
+  color: #0a5275;
+  padding: 0.25em 0.5625em;
+  transition: all .5s ease;
+}
+
+#check:checked ~ .sidebar{
+  left:0;
+}
+
+#check:checked ~ label #btn{
+  left:15.625em;
+  opacity: 0;
+  pointer-events: none;
+}
+#check:checked ~ label #cancel{
+  left: 5.1em;
 }
 </style>
