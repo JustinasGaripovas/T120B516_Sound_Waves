@@ -1,0 +1,94 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\SoundFile;
+use App\Form\SoundFileType;
+use App\Repository\SoundFileRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+/**
+ * @Route("/sound/file")
+ */
+class SoundFileController extends AbstractController
+{
+    /**
+     * @Route("/", name="sound_file_index", methods={"GET"})
+     */
+    public function index(SoundFileRepository $soundFileRepository): Response
+    {
+        return $this->render('sound_file/index.html.twig', [
+            'sound_files' => $soundFileRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/new", name="sound_file_new", methods={"GET","POST"})
+     */
+    public function new(Request $request): Response
+    {
+        $soundFile = new SoundFile();
+        $form = $this->createForm(SoundFileType::class, $soundFile);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($soundFile);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('sound_file_index');
+        }
+
+        return $this->render('sound_file/new.html.twig', [
+            'sound_file' => $soundFile,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="sound_file_show", methods={"GET"})
+     */
+    public function show(SoundFile $soundFile): Response
+    {
+        return $this->render('sound_file/show.html.twig', [
+            'sound_file' => $soundFile,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="sound_file_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, SoundFile $soundFile): Response
+    {
+        $form = $this->createForm(SoundFileType::class, $soundFile);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('sound_file_index');
+        }
+
+        return $this->render('sound_file/edit.html.twig', [
+            'sound_file' => $soundFile,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="sound_file_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, SoundFile $soundFile): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$soundFile->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($soundFile);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('sound_file_index');
+    }
+}
