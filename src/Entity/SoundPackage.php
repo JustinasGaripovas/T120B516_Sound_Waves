@@ -2,21 +2,14 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SoundPackageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(
- *     normalizationContext={"groups"={"read"}},
- *     denormalizationContext={"groups"={"write"}}
- * )
- *
  * @ORM\Entity(repositoryClass=SoundPackageRepository::class)
  */
 class SoundPackage
@@ -32,38 +25,32 @@ class SoundPackage
     private $id;
 
     /**
-     * @Groups({"write"})
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="soundPackages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $createdBy;
 
     /**
-     * @Groups({"write"})
      * @ORM\OneToMany(targetEntity=SoundFile::class, mappedBy="soundPackage")
      */
     private $soundFiles;
 
     /**
-     * @Groups({"write", "read"})
      * @ORM\ManyToOne(targetEntity=SoundPackage::class, inversedBy="childSoundPackages")
      */
     private $soundPackage;
 
     /**
-     * @Groups({"write"})
      * @ORM\OneToMany(targetEntity=SoundPackage::class, mappedBy="soundPackage")
      */
     private $childSoundPackages;
 
     /**
-     * @Groups({"write", "read"})
      * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
-     * @Groups({"write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
