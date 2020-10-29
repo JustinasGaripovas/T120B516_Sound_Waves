@@ -1,15 +1,16 @@
 <template>
-  <div class="container-fluid">
-   <MenuComponent></MenuComponent>
-  </div>
+  <MainViewComponent></MainViewComponent>
 </template>
+
 <script>
-import MenuComponent from "./MenuComponent";
+import MainViewComponent from "./MainViewComponent";
+
 export default {
   name: "App",
-  components: {MenuComponent}
+  components: {MainViewComponent}
 }
 </script>
+
 <style scoped>
 
 </style>
