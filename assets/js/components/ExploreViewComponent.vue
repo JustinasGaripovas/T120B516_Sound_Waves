@@ -2,7 +2,6 @@
   <div class="container-fluid">
       <h3>Explore</h3>
       <p>We go explorin' from here! /o/</p>
-      <p>* 同じ雪片は二つありません *</p>
   </div>
 </template>
 

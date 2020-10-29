@@ -2,7 +2,6 @@
   <div class="container-fluid">
       <h3>Settings</h3>
       <p>It's dangerous to go alone - enable these cookies!</p>
-      <p>~ 見ぬが花 ~</p>
   </div>
 </template>
 

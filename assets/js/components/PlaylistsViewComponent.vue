@@ -2,7 +2,6 @@
   <div class="container-fluid">
       <h3>Playlists</h3>
       <p>Lists of sick tunes live here. Be warned!</p>
-      <p>十人十色</p>
   </div>
 </template>
 
