@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SoundFile{% endblock %}
+
+{% block body %}
+    <h1>SoundFile</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ sound_file.id }}</td>
+            </tr>
+            <tr>
+                <th>DeletedAt</th>
+                <td>{{ sound_file.deletedAt ? sound_file.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ sound_file.createdAt ? sound_file.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ sound_file.updatedAt ? sound_file.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('sound_file_index') }}">back to list</a>
+
+    <a href="{{ path('sound_file_edit', {'id': sound_file.id}) }}">edit</a>
+
+    {{ include('sound_file/_delete_form.html.twig') }}
+{% endblock %}
