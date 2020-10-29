@@ -8,11 +8,11 @@
     <div class="sidebar">
       <header>MeloMenu</header>
       <ul>
-        <li><a href="#"><i class="fa fa-qrcode"></i>Dashbord</a></li>
-        <li><a href="#"><i class="fa fa-compass"></i>Explore</a></li>
-        <li><a href="#"><i class="fa fa-stream"></i>Playlists</a></li>
-        <li><a href="#"><i class="fa fa-sliders-h"></i>Settings</a></li>
-        <li><a href="#"><i class="fa fa-address-book"></i>Profile</a></li>
+        <li><a href="#" @click="changeCurrentView('tempo')"><i class="fa fa-qrcode"></i>Tempo</a></li>
+        <li><a href="#" @click="changeCurrentView('explore')"><i class="fa fa-compass"></i>Explore</a></li>
+        <li><a href="#" @click="changeCurrentView('playlists')"><i class="fa fa-stream"></i>Playlists</a></li>
+        <li><a href="#" @click="changeCurrentView('settings')"><i class="fa fa-sliders-h"></i>Settings</a></li>
+        <li><a href="#" @click="changeCurrentView('profile')"><i class="fa fa-address-book"></i>Profile</a></li>
       </ul>
     </div>
   </div>
@@ -20,8 +20,16 @@
 
 <script>
 export default {
-name: "MenuComponent"
+  name: "MenuComponent",
+
+  methods: {
+    changeCurrentView: function (viewName) {
+      this.$emit('changeCurrentView', viewName);
+    }
+  }
+
 }
+
 </script>
 
 <style scoped>
@@ -50,7 +58,7 @@ name: "MenuComponent"
   font-size: 1.375em;
   color: #fff;
   padding-left: 2.5em;
-  line-height: 4.375em;
+  line-height: 4.6em;
   background: #9F352F;
   user-select: none;
 }

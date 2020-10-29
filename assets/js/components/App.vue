@@ -1,17 +1,13 @@
 <template>
-  <div class="container-fluid">
-   <MenuComponent></MenuComponent>
-   <PlayMelodyTransitionComponent></PlayMelodyTransitionComponent>
-  </div>
+  <MainViewComponent></MainViewComponent>
 </template>
 
 <script>
-import MenuComponent from "./MenuComponent";
-import PlayMelodyTransitionComponent from "./PlayMelodyTransitionComponent";
+import MainViewComponent from "./MainViewComponent";
 
 export default {
   name: "App",
-  components: {MenuComponent, PlayMelodyTransitionComponent}
+  components: {MainViewComponent}
 }
 </script>
 

@@ -50,6 +50,7 @@ export default {
 
 .initMelodyButton {
     margin: auto;
+    margin-top: 40%;
     font-size: 3em;
     text-align: center;
     background-color: transparent;
