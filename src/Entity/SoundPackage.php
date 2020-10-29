@@ -36,16 +36,6 @@ class SoundPackage
     private $soundFiles;
 
     /**
-     * @ORM\ManyToOne(targetEntity=SoundPackage::class, inversedBy="childSoundPackages")
-     */
-    private $soundPackage;
-
-    /**
-     * @ORM\OneToMany(targetEntity=SoundPackage::class, mappedBy="soundPackage")
-     */
-    private $childSoundPackages;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -58,7 +48,6 @@ class SoundPackage
     public function __construct()
     {
         $this->soundFiles = new ArrayCollection();
-        $this->childSoundPackages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -103,49 +92,6 @@ class SoundPackage
             // set the owning side to null (unless already changed)
             if ($soundFile->getSoundPackage() === $this) {
                 $soundFile->setSoundPackage(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getSoundPackage(): ?self
-    {
-        return $this->soundPackage;
-    }
-
-    public function setSoundPackage(?self $soundPackage): self
-    {
-        $this->soundPackage = $soundPackage;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|self[]
-     */
-    public function getChildSoundPackages(): Collection
-    {
-        return $this->childSoundPackages;
-    }
-
-    public function addChildSoundPackage(self $childSoundPackage): self
-    {
-        if (!$this->childSoundPackages->contains($childSoundPackage)) {
-            $this->childSoundPackages[] = $childSoundPackage;
-            $childSoundPackage->setSoundPackage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChildSoundPackage(self $childSoundPackage): self
-    {
-        if ($this->childSoundPackages->contains($childSoundPackage)) {
-            $this->childSoundPackages->removeElement($childSoundPackage);
-            // set the owning side to null (unless already changed)
-            if ($childSoundPackage->getSoundPackage() === $this) {
-                $childSoundPackage->setSoundPackage(null);
             }
         }
 
