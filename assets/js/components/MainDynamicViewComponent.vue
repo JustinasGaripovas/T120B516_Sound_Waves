@@ -23,13 +23,13 @@ export default {
       switch (this.currentView) {
         case "tempo":
           return PlayMelodyTransitionComponent;
-        case "explore":
+        case "melody":
           return ExploreViewComponent;
-        case "playlists":
+        case "rhythm":
           return PlaylistsViewComponent;
-        case "settings":
+        case "dynamics":
           return SettingsViewComponent;
-        case "profile":
+        case "timbre":
           return ProfileViewComponent;
         default:
           break;

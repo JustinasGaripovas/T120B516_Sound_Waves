@@ -1,7 +1,6 @@
 <template>
   <div>
-    <MainViewComponent></MainViewComponent>
-    {{ categories }}
+    <MainViewComponent v-bind:categories="categories"></MainViewComponent>
   </div>
 </template>
 
@@ -25,7 +24,8 @@ export default {
       fetch(request).then(function(response) {
         return response.text();
       }).then((responseText) => {
-        this.categories = [responseText]
+        this.categories = JSON.parse(responseText).categories
+        console.log(this.categories)
       });
     }
   }

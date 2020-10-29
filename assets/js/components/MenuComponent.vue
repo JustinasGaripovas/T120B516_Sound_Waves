@@ -8,11 +8,12 @@
     <div class="sidebar">
       <header>MeloMenu</header>
       <ul>
-        <li><a href="#" @click="changeCurrentView('tempo')"><i class="fa fa-qrcode"></i>Tempo</a></li>
-        <li><a href="#" @click="changeCurrentView('explore')"><i class="fa fa-compass"></i>Explore</a></li>
-        <li><a href="#" @click="changeCurrentView('playlists')"><i class="fa fa-stream"></i>Playlists</a></li>
-        <li><a href="#" @click="changeCurrentView('settings')"><i class="fa fa-sliders-h"></i>Settings</a></li>
-        <li><a href="#" @click="changeCurrentView('profile')"><i class="fa fa-address-book"></i>Profile</a></li>
+
+        <div v-for="category in categories"
+             :key="category.id"
+        >
+          <li><a href="#" @click='changeCurrentView(category.title)'><i class="fa fa-qrcode"></i>{{category.title}}</a></li>
+        </div>
       </ul>
     </div>
   </div>
@@ -21,10 +22,15 @@
 <script>
 export default {
   name: "MenuComponent",
-
+  props: {
+    categories: Array
+  },
   methods: {
+    getTitle(title){
+      return title
+    },
     changeCurrentView: function (viewName) {
-      this.$emit('changeCurrentView', viewName);
+      this.$emit('changeCurrentView', viewName.toLowerCase());
     }
   }
 

@@ -13,8 +13,18 @@ class CategoryController extends AbstractController
      */
     public function getAllCategories(CategoryRepository $categoryRepository)
     {
+        $categoryTitles = [];
+
+        foreach ($categoryRepository->findAll() as $category)
+        {
+            $categoryTitles[] = [
+                'id' => $category->getId(),
+                'title' => $category->getTitle()
+            ];
+        }
+
         return $this->json([
-           'categories' => $categoryRepository->findAll()
+           'categories' => $categoryTitles
         ]);
     }
 
