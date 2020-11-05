@@ -1,63 +1,48 @@
 <template>
   <div class="container-fluid">
-    <MenuComponent v-on:changeCurrentView="changeCurrentView" v-bind:categories="categories"></MenuComponent>
-    <component :is="dynamicComponent"></component>
+    <MenuComponent v-on:passInformation="passInformation" v-bind:categories="categories"></MenuComponent>
+    <LevelComponent v-on:passLevel="passLevel" v-if="this.show === true"></LevelComponent>
+    <PackageListComponent v-bind:level="levelName" v-bind:category="categoryId" v-if="levelName !== null"></PackageListComponent>
   </div>
 </template>
 
 <script>
 import MenuComponent from "./MenuComponent";
-import ExploreViewComponent from "./ExploreViewComponent";
-import PlaylistsViewComponent from "./PlaylistsViewComponent";
-import SettingsViewComponent from "./SettingsViewComponent";
-import ProfileViewComponent from "./ProfileViewComponent";
-import MelodyViewComponent from "./MelodyViewComponent";
+import LevelComponent from "./LevelComponent";
+import PackageListComponent from "./PackageListComponent";
 
 export default {
   name: "App",
   data(){
     return {
-      currentView: MenuComponent,
-      categories: []
+      categories: [],
+      show: false,
+      categoryId: null,
+      levelName: null
     }
   },
-  components: {MenuComponent},
+  components: {PackageListComponent, LevelComponent, MenuComponent},
   created() {
     this.getCategories()
   },
   methods:{
-    changeCurrentView(viewName){
-      this.currentView = viewName;
-      console.log(viewName);
-    },
-    getCategories(){
+    getCategories() {
       let request = new Request('http://localhost:8000/category', {method: 'GET'});
       fetch(request).then(function(response) {
         return response.text();
       }).then((responseText) => {
         this.categories = JSON.parse(responseText).categories
-        console.log(this.categories)
       });
+    },
+    passInformation(id, showBool) {
+      this.show = showBool;
+      this.categoryId = id;
+    },
+    passLevel(level) {
+      this.levelName = level;
+      console.log(level != null);
     }
   },
-  computed: {
-    dynamicComponent() {
-      switch (this.currentView) {
-        case "tempo":
-          return MelodyViewComponent;
-        case "explore":
-          return ExploreViewComponent;
-        case "playlists":
-          return PlaylistsViewComponent;
-        case "settings":
-          return SettingsViewComponent;
-        case "profile":
-          return ProfileViewComponent;
-        default:
-          break;
-      }
-    }
-  }
 }
 </script>
 

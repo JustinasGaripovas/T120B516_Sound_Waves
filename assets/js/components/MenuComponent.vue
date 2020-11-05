@@ -11,7 +11,7 @@
         <div v-for="category in categories"
              :key="category.id"
         >
-          <li><a href="#" @click='changeCurrentView(category.title)'><i class="fa fa-qrcode"></i>{{category.title}}</a></li>
+          <li><a href="#" @click="passInformation(category.id, true)"><i class="fa fa-qrcode"></i>{{category.title}}</a></li>
         </div>
       </ul>
     </div>
@@ -25,8 +25,8 @@ export default {
     categories: Array
   },
   methods: {
-    changeCurrentView: function (viewName) {
-      this.$emit('changeCurrentView', viewName.toLowerCase());
+    passInformation(id, showBool){
+      this.$emit('passInformation', id, showBool);
     }
   }
 }
@@ -51,16 +51,16 @@ export default {
   left: -15.625em;
   width: 15.625em;
   height: 100%;
-  background: #DF5A36;
+  background: #0d3545;
   transition: all .5s ease;
 }
 
 .sidebar header{
-  font-size: 1.375em;
+  font-size: 1.8em;
   color: #fff;
   padding-left: 2.5em;
   line-height: 4.6em;
-  background: #9F352F;
+  background: #176585;
   user-select: none;
 }
 
@@ -92,7 +92,7 @@ ul li:hover a{
 label #btn,label #cancel{
   position: absolute;
   cursor: pointer;
-  background: #C23141;
+  background: #0d3545;
   border-radius: 0.1875em;
 }
 
@@ -112,7 +112,7 @@ label #btn{
 label #cancel{
   z-index: 1111;
   left: -4.8em;
-  top: 1em;
+  top: 1.5em;
   font-size: 1.875em;
   color: #fff;
   padding: 0.25em 0.5em;

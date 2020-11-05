@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SoundPackageRepository::class)
@@ -19,6 +20,7 @@ class SoundPackage
     use TimestampableEntity;
 
     /**
+     * @Groups("music_list")
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -32,11 +34,13 @@ class SoundPackage
     private $createdBy;
 
     /**
+     * @Groups("music_list")
      * @ORM\OneToMany(targetEntity=SoundFile::class, mappedBy="soundPackage")
      */
     private $soundFiles;
 
     /**
+     * @Groups("music_list")
      * @ORM\Column(type="string", length=255)
      */
     private $title;

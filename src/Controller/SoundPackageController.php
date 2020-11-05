@@ -17,13 +17,13 @@ class SoundPackageController extends AbstractController
         $level = $request->request->get('level');
         $category_id = $request->request->get('category_id');
 
-        $validSoundPackages = $soundPackageRepository->findBy(["level" => $level, "category" => $category_id ]);
-
+        $validSoundPackages = $soundPackageRepository->findBy(["level" => $level, "category" => $category_id]);
         return $this->json([
-           'sound_packages' => $validSoundPackages
-        ]);
+            'sound_packages' => $validSoundPackages],
+            200,
+            [],
+            ['groups' => ['music_list']]);
     }
-
 
 
 }
