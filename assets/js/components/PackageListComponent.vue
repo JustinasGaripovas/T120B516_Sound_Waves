@@ -28,6 +28,7 @@ export default {
   methods: {
     getSoundPackages() {
       const url = "http://localhost:8000/sound_package";
+      var comp = this;
       const data = {
         category_id: this.category.toString(),
         level: this.level.toString()
@@ -39,15 +40,17 @@ export default {
 
       xhr.onreadystatechange = function () { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-          let response = JSON.parse(xhr.responseText);
-
-          this.soundPackages = response.sound_packages;
-
+          if (this.readyState === XMLHttpRequest.DONE) {
+            if (this.status === 200) {
+              let response = JSON.parse(xhr.responseText);
+              comp.soundPackages = response.sound_packages;
+            } else {
+              console.log(this.status, this.statusText);
+            }
+          }
         }
       }
       xhr.send(`category_id=${data.category_id}&level=${data.level}`);
-
-
     }
   }
 }
