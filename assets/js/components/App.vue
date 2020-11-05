@@ -31,7 +31,7 @@ export default {
       console.log(viewName);
     },
     getCategories(){
-      let request = new Request('http://localhost:8001/category', {method: 'GET'});
+      let request = new Request('http://localhost:8000/category', {method: 'GET'});
       fetch(request).then(function(response) {
         return response.text();
       }).then((responseText) => {
