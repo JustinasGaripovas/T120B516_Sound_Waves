@@ -6,9 +6,8 @@
       <i class="fas fa-times" id="cancel"></i>
     </label>
     <div class="sidebar">
-      <header>MeloMenu</header>
+      <header>Menu</header>
       <ul>
-
         <div v-for="category in categories"
              :key="category.id"
         >
@@ -26,9 +25,6 @@ export default {
     categories: Array
   },
   methods: {
-    getTitle(title){
-      return title
-    },
     changeCurrentView: function (viewName) {
       this.$emit('changeCurrentView', viewName.toLowerCase());
     }

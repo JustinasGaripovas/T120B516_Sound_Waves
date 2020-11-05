@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <MenuComponent v-on:changeCurrentView="changeCurrentView"></MenuComponent>
+    <MenuComponent v-on:changeCurrentView="changeCurrentView" v-bind:categories="categories"></MenuComponent>
     <component :is="dynamicComponent"></component>
   </div>
 </template>
