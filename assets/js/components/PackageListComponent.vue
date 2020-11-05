@@ -1,24 +1,23 @@
 <template>
   <div class="container-fluid center">
-    <br>
-    <br>
-    <br>
-    <br>
-    {{getSoundPackages}}
-    TEST
-<!--      <ul>-->
-<!--        <div v-for="x in x"-->
-<!--             :key="x.id"-->
-<!--        >-->
-<!--          <li><a href="#" @click="x(x)">{{x.title}}</a></li>-->
-<!--        </div>-->
-<!--      </ul>-->
+      <ul>
+        <div v-for="soundPackage in soundPackages"
+             :key="soundPackage.id"
+        >
+          <li><a href="#">{{soundPackage.title}}</a></li>
+        </div>
+      </ul>
   </div>
 </template>
 
 <script>
 export default {
   name: "PackageListComponent",
+  data(){
+    return {
+      soundPackages: [],
+    }
+  },
   props: {
     level: Number,
     category: Number
@@ -30,24 +29,25 @@ export default {
     getSoundPackages() {
       const url = "http://localhost:8000/sound_package";
       const data = {
-        category_id: this.category,
-        level: this.level
+        category_id: this.category.toString(),
+        level: this.level.toString()
       };
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url, true);
 
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-          .then(response => {console.log(response.json()); response.json();})
-          .then(data => {
-            console.log('Success:', data);
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-          });
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      xhr.onreadystatechange = function () { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          let response = JSON.parse(xhr.responseText);
+
+          this.soundPackages = response.sound_packages;
+
+        }
+      }
+      xhr.send(`category_id=${data.category_id}&level=${data.level}`);
+
+
     }
   }
 }
