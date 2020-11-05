@@ -17,14 +17,27 @@ export default {
   name: "App",
   data(){
     return {
-      currentView: MenuComponent
+      currentView: MenuComponent,
+      categories: []
     }
   },
   components: {MenuComponent},
+  created() {
+    this.getCategories()
+  },
   methods:{
     changeCurrentView(viewName){
       this.currentView = viewName;
       console.log(viewName);
+    },
+    getCategories(){
+      let request = new Request('http://localhost:8001/category', {method: 'GET'});
+      fetch(request).then(function(response) {
+        return response.text();
+      }).then((responseText) => {
+        this.categories = JSON.parse(responseText).categories
+        console.log(this.categories)
+      });
     }
   },
   computed: {

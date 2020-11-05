@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SoundPackageRepository::class)
@@ -36,16 +37,6 @@ class SoundPackage
     private $soundFiles;
 
     /**
-     * @ORM\ManyToOne(targetEntity=SoundPackage::class, inversedBy="childSoundPackages")
-     */
-    private $soundPackage;
-
-    /**
-     * @ORM\OneToMany(targetEntity=SoundPackage::class, mappedBy="soundPackage")
-     */
-    private $childSoundPackages;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -55,10 +46,24 @@ class SoundPackage
      */
     private $description;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="soundPackages")
+     */
+    private $category;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 2,
+     *      notInRangeMessage = "Level must be between {{ min }} and {{ max }}",
+     * )
+     */
+    private $level;
+
     public function __construct()
     {
         $this->soundFiles = new ArrayCollection();
-        $this->childSoundPackages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -109,49 +114,6 @@ class SoundPackage
         return $this;
     }
 
-    public function getSoundPackage(): ?self
-    {
-        return $this->soundPackage;
-    }
-
-    public function setSoundPackage(?self $soundPackage): self
-    {
-        $this->soundPackage = $soundPackage;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|self[]
-     */
-    public function getChildSoundPackages(): Collection
-    {
-        return $this->childSoundPackages;
-    }
-
-    public function addChildSoundPackage(self $childSoundPackage): self
-    {
-        if (!$this->childSoundPackages->contains($childSoundPackage)) {
-            $this->childSoundPackages[] = $childSoundPackage;
-            $childSoundPackage->setSoundPackage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChildSoundPackage(self $childSoundPackage): self
-    {
-        if ($this->childSoundPackages->contains($childSoundPackage)) {
-            $this->childSoundPackages->removeElement($childSoundPackage);
-            // set the owning side to null (unless already changed)
-            if ($childSoundPackage->getSoundPackage() === $this) {
-                $childSoundPackage->setSoundPackage(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getTitle(): ?string
     {
         return $this->title;
@@ -172,6 +134,30 @@ class SoundPackage
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(int $level): self
+    {
+        $this->level = $level;
 
         return $this;
     }
