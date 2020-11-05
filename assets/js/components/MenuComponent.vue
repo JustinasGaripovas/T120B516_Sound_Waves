@@ -21,13 +21,11 @@
 <script>
 export default {
   name: "MenuComponent",
-
   methods: {
-    changeCurrentView: function (viewName) {
+    changeCurrentView(viewName) {
       this.$emit('changeCurrentView', viewName);
     }
   }
-
 }
 
 </script>
