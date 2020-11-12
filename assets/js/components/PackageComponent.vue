@@ -27,12 +27,15 @@ let centerY;
 let xPos;
 let yOld;
 
+const recordingWaveColor = '#1438ba';
+const backgroundWaveColor = '#ffffff';
+const followingBarColor = 'green';
+
 export default {
   name: "PackageComponent",
   methods:{
     //app.js
     drawAudio(url) {
-      console.log()
       fetch(url)
           .then(response => response.arrayBuffer())
           .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
@@ -72,8 +75,8 @@ export default {
       return points;
     },
     draw(ctx, points) {
-      var f;
-      var t;
+      let f;
+      let t;
       ctx.beginPath();
       ctx.moveTo(points[0].x, points[0].y);
 
@@ -83,17 +86,17 @@ export default {
       ctx.beginPath();
       ctx.moveTo(points[0].x, points[0].y);
 
-      var m = 0;
-      var dx1 = 0;
-      var dy1 = 0;
-      var dx2;
-      var dy2;
+      let m = 0;
+      let dx1 = 0;
+      let dy1 = 0;
+      let dx2;
+      let dy2;
 
-      var preP = points[0];
-      var nexP;
+      let preP = points[0];
+      let nexP;
 
-      for (var i = 1; i < points.length; i++) {
-        var curP = points[i];
+      for (let i = 1; i < points.length; i++) {
+        let curP = points[i];
         nexP = points[i + 1];
         if (nexP) {
           m = this.gradient(preP, nexP);
@@ -114,6 +117,7 @@ export default {
         dy1 = dy2;
         preP = curP;
       }
+      ctx.fillStyle = backgroundWaveColor;
       ctx.stroke();
     },
     drawSeq(normalizeData) {
@@ -139,9 +143,12 @@ export default {
     },
 
     drawFollowingBar() {
+
+      let offsetFromWave = 20;
+
       canvasContext.beginPath();
-      canvasContext.fillRect(0, (centerY * 1.8) + 20, xPos, 20);
-      canvasContext.fillStyle = 'green';
+      canvasContext.fillRect(0, (centerY * 1.8) + offsetFromWave, xPos, 20);
+      canvasContext.fillStyle = followingBarColor;
       canvasContext.fill();
       canvasContext.lineWidth = 2;
       canvasContext.closePath();
@@ -163,18 +170,15 @@ export default {
       canvasContext.moveTo(xPos, yOld);
       canvasContext.lineTo(xPos += 6, average);
       yOld = average
-      canvasContext.strokeStyle = '#0b49e6';
+      canvasContext.strokeStyle = recordingWaveColor;
       canvasContext.lineWidth = 2;
 
       canvasContext.stroke();
       canvasContext.closePath();
     },
     changeBackgroundColorAccordingToVoiceFrequency(average) {
-      let precentage = (average - 240) / (440 - 240) * 100;
-
-      console.log(precentage)
-
-      canvas.style.backgroundColor = this.greenToRedGradiant(precentage);
+      let percentage = (average - 240) / (440 - 240) * 100;
+      canvas.style.backgroundColor = this.greenToRedGradiant(percentage);
     },
     handleAudioProcess(analyser) {
       let average = this.getAverageAudioY(analyser);
@@ -184,7 +188,7 @@ export default {
       this.changeBackgroundColorAccordingToVoiceFrequency(average)
     },
     greenToRedGradiant(perc) {
-      var r, g, b = 0;
+      let r, g, b = 0;
       if(perc < 50) {
         r = 255;
         g = Math.round(5 * perc);
@@ -193,11 +197,11 @@ export default {
         g = 255;
         r = Math.round(510 - 5 * perc);
       }
-      var h = r * 0x10000 + g * 0x100 + b * 0x1;
+      let h = r * 0x10000 + g * 0x100 + b * 0x1;
       return '#' + ('000000' + h.toString(16)).slice(-6);
     },
     successCallback(stream) {
-      var comp = this;
+      let comp = this;
       audioContext = new AudioContext();
       let analyser = audioContext.createAnalyser();
       let microphone = audioContext.createMediaStreamSource(stream);
@@ -216,7 +220,7 @@ export default {
       }
     },
     handleVoiceRecordingAndDrawing() {
-      var temp = this;
+      let temp = this;
       if (navigator.getUserMedia) {
         navigator.getUserMedia({
               audio: true
