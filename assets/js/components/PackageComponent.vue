@@ -170,11 +170,11 @@ export default {
       canvasContext.closePath();
     },
     changeBackgroundColorAccordingToVoiceFrequency(average) {
-      let precentage = this.normalize(average, canvas.height * 1.8, 0) + 1.2;
+      let precentage = (average - 240) / (440 - 240) * 100;
 
-      console.log(precentage * 50)
+      console.log(precentage)
 
-      canvas.style.backgroundColor = this.greenToRedGradiant(precentage*50);
+      canvas.style.backgroundColor = this.greenToRedGradiant(precentage);
     },
     handleAudioProcess(analyser) {
       let average = this.getAverageAudioY(analyser);
