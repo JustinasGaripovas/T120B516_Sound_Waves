@@ -1,8 +1,11 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid background">
     <MenuComponent v-on:passInformation="passInformation" v-bind:categories="categories"></MenuComponent>
-    <LevelComponent v-on:passLevel="passLevel" v-if="this.show === true"></LevelComponent>
-    <PackageListComponent v-bind:level="levelName" v-bind:category="categoryId" v-if="levelName !== null"></PackageListComponent>
+    <div v-if="showButtons">
+      <LevelComponent v-on:passLevel="passLevel" v-if="this.show === true"></LevelComponent>
+      <PackageListComponent v-bind:level="levelName" v-bind:category="categoryId" v-if="levelName !== null"></PackageListComponent>
+    </div>
+    <router-view v-on:flag="flag"></router-view>
   </div>
 </template>
 
@@ -18,7 +21,8 @@ export default {
       categories: [],
       show: false,
       categoryId: null,
-      levelName: null
+      levelName: null,
+      showButtons: true
     }
   },
   components: {PackageListComponent, LevelComponent, MenuComponent},
@@ -26,8 +30,11 @@ export default {
     this.getCategories()
   },
   methods:{
+    flag() {
+      this.showButtons = !this.showButtons;
+    },
     getCategories() {
-      let request = new Request('http://localhost:8000/category', {method: 'GET'});
+      let request = new Request('/category', {method: 'GET'});
       fetch(request).then(function(response) {
         return response.text();
       }).then((responseText) => {
@@ -37,6 +44,9 @@ export default {
     passInformation(id, showBool) {
       this.show = showBool;
       this.categoryId = id;
+      if (!this.showButtons) {
+        this.showButtons = true;
+      }
     },
     passLevel(level) {
       this.levelName = level;

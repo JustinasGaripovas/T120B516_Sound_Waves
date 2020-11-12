@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid backg">
     <input type="checkbox" id="sidebarCheck">
     <label for="sidebarCheck">
       <i class="fas fa-bars" id="btn"></i>

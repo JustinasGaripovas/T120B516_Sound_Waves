@@ -2,9 +2,8 @@
   <div class="container-fluid center">
       <ul>
         <div v-for="soundPackage in soundPackages"
-             :key="soundPackage.id"
-        >
-          <li><a href="#">{{soundPackage.title}}</a></li>
+             :key="soundPackage.id">
+          <li><router-link :to="{ name:'package', params:{ id:soundPackage.id}}">{{soundPackage.title}}</router-link></li>
         </div>
       </ul>
   </div>
@@ -26,8 +25,12 @@ export default {
     this.getSoundPackages()
   },
   methods: {
+    flag() {
+
+    },
     getSoundPackages() {
-      const url = "http://localhost:8000/sound_package";
+      // TODO change this into Axios
+      const url = "/sound_package";
       var comp = this;
       const data = {
         category_id: this.category.toString(),
@@ -59,5 +62,8 @@ export default {
 <style scoped>
 .center{
   text-align-last: center;
+}
+a{
+
 }
 </style>
