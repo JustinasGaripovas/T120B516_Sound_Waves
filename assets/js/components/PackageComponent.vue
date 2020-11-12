@@ -26,6 +26,7 @@ let centerX;
 let centerY;
 let xPos;
 let yOld;
+
 export default {
   name: "PackageComponent",
   methods:{
@@ -63,7 +64,7 @@ export default {
       for (let i = 0; i < normalizeData.length; i++) {
         points.push(
             {
-              y: -1*(normalizeData[i] * canvasHeight) + 150,
+              y: -1*(normalizeData[i] * canvasHeight) + canvasHeight*1.8,
               x: xStep += 10
             }
         )
@@ -118,7 +119,8 @@ export default {
     drawSeq(normalizeData) {
       let canvas = document.querySelector("canvas");
       let ctx = canvas.getContext("2d");
-      let canvasHeight = 150;
+
+      let canvasHeight = canvas.height/2;
 
       ctx.moveTo(0, canvasHeight/2);
 
@@ -135,9 +137,10 @@ export default {
     normalize(val, max, min) {
       return (val - min) / (max - min);
     },
+
     drawFollowingBar() {
       canvasContext.beginPath();
-      canvasContext.fillRect(0, centerY + 50, xPos, 20);
+      canvasContext.fillRect(0, (centerY * 1.8) + 20, xPos, 20);
       canvasContext.fillStyle = 'green';
       canvasContext.fill();
       canvasContext.lineWidth = 2;
@@ -167,9 +170,9 @@ export default {
       canvasContext.closePath();
     },
     changeBackgroundColorAccordingToVoiceFrequency(average) {
-      let precentage = this.normalize(average, canvas.height * 1.8, 0) + 1;
+      let precentage = this.normalize(average, canvas.height * 1.8, 0) + 1.2;
 
-      console.log(precentage *50)
+      console.log(precentage * 50)
 
       canvas.style.backgroundColor = this.greenToRedGradiant(precentage*50);
     },
@@ -184,11 +187,11 @@ export default {
       var r, g, b = 0;
       if(perc < 50) {
         r = 255;
-        g = Math.round(5.1 * perc);
+        g = Math.round(5 * perc);
       }
       else {
         g = 255;
-        r = Math.round(510 - 5.10 * perc);
+        r = Math.round(510 - 5 * perc);
       }
       var h = r * 0x10000 + g * 0x100 + b * 0x1;
       return '#' + ('000000' + h.toString(16)).slice(-6);
