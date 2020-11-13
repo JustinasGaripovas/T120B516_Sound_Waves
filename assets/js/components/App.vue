@@ -3,7 +3,7 @@
     <MenuComponent v-on:passInformation="passInformation" v-bind:categories="categories"></MenuComponent>
     <div v-if="showButtons">
       <LevelComponent v-on:passLevel="passLevel" v-if="this.show === true"></LevelComponent>
-      <PackageListComponent v-bind:level="levelName" v-bind:category="categoryId" v-if="levelName !== null"></PackageListComponent>
+      <PackageListComponent v-bind:level="levelName" v-bind:category="categoryId"></PackageListComponent>
     </div>
     <router-view v-on:flag="flag"></router-view>
   </div>
@@ -44,6 +44,7 @@ export default {
     passInformation(id, showBool) {
       this.show = showBool;
       this.categoryId = id;
+      console.log(this.categoryId);
       if (!this.showButtons) {
         this.showButtons = true;
       }
@@ -51,11 +52,15 @@ export default {
     passLevel(level) {
       this.levelName = level;
       console.log(level != null);
+      console.log(level);
     }
   },
 }
 </script>
 
-<style scoped>
-
-</style>
+<!--<style scoped>-->
+<!--.background{-->
+<!--  height: 30em;-->
+<!--  background: url("/files/unnamed.png") no-repeat;-->
+<!--&lt;!&ndash;}&ndash;&gt;-->
+<!--</style>-->

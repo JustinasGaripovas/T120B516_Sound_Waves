@@ -21,13 +21,14 @@ export default {
     level: Number,
     category: Number
   },
-  created() {
-    this.getSoundPackages()
+  watch: {
+    level: function (val) {
+      if(val != null) {
+        this.getSoundPackages();
+      }
+    }
   },
   methods: {
-    flag() {
-
-    },
     getSoundPackages() {
       // TODO change this into Axios
       const url = "/sound_package";
