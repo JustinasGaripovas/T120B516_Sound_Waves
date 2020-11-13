@@ -1,18 +1,23 @@
 <template>
   <div class="container-fluid center">
-      <ul>
-        <div v-for="soundPackage in soundPackages"
-             :key="soundPackage.id">
-          <li><router-link :to="{ name:'package', params:{ id:soundPackage.id}}">{{soundPackage.title}}</router-link></li>
-        </div>
-      </ul>
+    <ul>
+      <div v-for="soundPackage in soundPackages"
+           :key="soundPackage.id" class="center-div">
+        <li class="item separate">
+          <router-link :to="{ name:'package', params:{ id:soundPackage.id}}" class="router">{{
+              soundPackage.title
+            }}
+          </router-link>
+        </li>
+      </div>
+    </ul>
   </div>
 </template>
 
 <script>
 export default {
   name: "PackageListComponent",
-  data(){
+  data() {
     return {
       soundPackages: [],
     }
@@ -23,7 +28,7 @@ export default {
   },
   watch: {
     level: function (val) {
-      if(val != null) {
+      if (val != null) {
         this.getSoundPackages();
       }
     }
@@ -61,10 +66,33 @@ export default {
 </script>
 
 <style scoped>
-.center{
+.center {
   text-align-last: center;
 }
-a{
 
+ul {
+  list-style: none;
+}
+
+.item {
+  background-color: grey;
+  padding: 0.5em;
+  width: 24%;
+  margin: 0 auto;
+  text-decoration: none;
+  color: black;
+}
+
+.router {
+  text-decoration: none;
+  color: black;
+}
+
+.separate {
+  margin-bottom: 0.5em;
+}
+
+.center-div {
+  margin-right: 40px;
 }
 </style>

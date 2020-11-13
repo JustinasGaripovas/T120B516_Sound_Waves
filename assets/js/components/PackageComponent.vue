@@ -1,8 +1,11 @@
 <template>
   <div class="container-fluid center">
-    <canvas id="wave" height="500px" width="1000px" style="border:1px solid #000000;"></canvas>
 
-    <button id="play">Play</button>
+<!--    style="border:1px solid #000000;"-->
+    <canvas id="wave" height="500px" width="1000px"></canvas><br>
+    <button class="play" id="play">Play</button>
+    <br>
+    <br>
   </div>
 </template>
 
@@ -261,7 +264,15 @@ export default {
 </script>
 
 <style scoped>
+
 .center{
   text-align-last: center;
+}
+.play{
+  margin-top: 1.3em;
+  background-color: #0d3545;
+  padding: 0.3em 3em;
+  border: none;
+  color: white;
 }
 </style>

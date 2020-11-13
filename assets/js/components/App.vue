@@ -1,11 +1,15 @@
 <template>
-  <div class="container-fluid background">
+  <div class="container-fluid">
     <MenuComponent v-on:passInformation="passInformation" v-bind:categories="categories"></MenuComponent>
+    <div class="container-fluid">
+      <p class="main-title">Sound Waves</p>
+    </div>
     <div v-if="showButtons">
       <LevelComponent v-on:passLevel="passLevel" v-if="this.show === true"></LevelComponent>
       <PackageListComponent v-bind:level="levelName" v-bind:category="categoryId"></PackageListComponent>
     </div>
     <router-view v-on:flag="flag"></router-view>
+    <div class="footer"></div>
   </div>
 </template>
 
@@ -44,23 +48,22 @@ export default {
     passInformation(id, showBool) {
       this.show = showBool;
       this.categoryId = id;
-      console.log(this.categoryId);
       if (!this.showButtons) {
         this.showButtons = true;
       }
     },
-    passLevel(level) {
+    passLevel(level, boolean) {
       this.levelName = level;
-      console.log(level != null);
-      console.log(level);
+      // this.show = boolean;
     }
   },
 }
 </script>
 
-<!--<style scoped>-->
-<!--.background{-->
-<!--  height: 30em;-->
-<!--  background: url("/files/unnamed.png") no-repeat;-->
-<!--&lt;!&ndash;}&ndash;&gt;-->
-<!--</style>-->
+<style scoped>
+.main-title{
+  font-size: 5em;
+  text-align: center;
+  border-bottom: 0.03em solid grey;
+}
+</style>
