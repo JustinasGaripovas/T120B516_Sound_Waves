@@ -1,10 +1,11 @@
 <template>
   <div class="container-fluid center">
-
-<!--    style="border:1px solid #000000;"-->
-    <canvas id="wave" height="500px" width="1000px"></canvas><br>
+    <!--    style="border:1px solid #000000;"-->
+    <canvas id="wave" height="500px" width="1000px"></canvas>
+    <br>
     <button class="play" id="play">Play</button>
     <br>
+    <a @click="$router.go(-1)" class="back">Back</a>
     <br>
   </div>
 </template>
@@ -36,7 +37,7 @@ const followingBarColor = 'green';
 
 export default {
   name: "PackageComponent",
-  methods:{
+  methods: {
     //app.js
     drawAudio(url) {
       fetch(url)
@@ -70,7 +71,7 @@ export default {
       for (let i = 0; i < normalizeData.length; i++) {
         points.push(
             {
-              y: -1*(normalizeData[i] * canvasHeight) + canvasHeight*1.8,
+              y: -1 * (normalizeData[i] * canvasHeight) + canvasHeight * 1.8,
               x: xStep += 10
             }
         )
@@ -127,16 +128,16 @@ export default {
       let canvas = document.querySelector("canvas");
       let ctx = canvas.getContext("2d");
 
-      let canvasHeight = canvas.height/2;
+      let canvasHeight = canvas.height / 2;
 
-      ctx.moveTo(0, canvasHeight/2);
+      ctx.moveTo(0, canvasHeight / 2);
 
       const points = this.getPoints(normalizeData, canvasHeight);
 
       this.draw(ctx, points);
     },
     gradient(a, b) {
-      return (b.y-a.y)/(b.x-a.x);
+      return (b.y - a.y) / (b.x - a.x);
     },
 
     //recorder.js
@@ -192,11 +193,10 @@ export default {
     },
     greenToRedGradiant(perc) {
       let r, g, b = 0;
-      if(perc < 50) {
+      if (perc < 50) {
         r = 255;
         g = Math.round(5 * perc);
-      }
-      else {
+      } else {
         g = 255;
         r = Math.round(510 - 5 * perc);
       }
@@ -265,12 +265,22 @@ export default {
 
 <style scoped>
 
-.center{
+.center {
   text-align-last: center;
 }
-.play{
+
+.play {
   margin-top: 1.3em;
+  margin-bottom: 1.3em;
   background-color: #0d3545;
+  padding: 0.3em 3em;
+  border: none;
+  color: white;
+}
+
+.back {
+  margin-top: 1em;
+  background-color: #0B7FC7;
   padding: 0.3em 3em;
   border: none;
   color: white;

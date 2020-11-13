@@ -5,7 +5,7 @@
       <p class="main-title">Sound Waves</p>
     </div>
     <div v-if="showButtons">
-      <LevelComponent v-on:passLevel="passLevel" v-if="this.show === true"></LevelComponent>
+      <LevelComponent v-on:passLevel="passLevel" v-if="this.show === true && this.showSub === false"></LevelComponent>
       <PackageListComponent v-bind:level="levelName" v-bind:category="categoryId"></PackageListComponent>
     </div>
     <router-view v-on:flag="flag"></router-view>
@@ -26,7 +26,8 @@ export default {
       show: false,
       categoryId: null,
       levelName: null,
-      showButtons: true
+      showButtons: true,
+      showSub: false
     }
   },
   components: {PackageListComponent, LevelComponent, MenuComponent},
@@ -54,7 +55,7 @@ export default {
     },
     passLevel(level, boolean) {
       this.levelName = level;
-      // this.show = boolean;
+      this.showSub = !this.showSub;
     }
   },
 }
