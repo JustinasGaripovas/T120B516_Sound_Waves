@@ -7,23 +7,31 @@
     </label>
     <div class="sidebar">
       <header>Menu</header>
-      <ul>
-        <div v-for="category in categories"
-             :key="category.id"
-        >
-          <li><a href="#" @click="passInformation(category.id, true)"><i class="fa fa-qrcode"></i>{{category.title}}</a></li>
-        </div>
-      </ul>
+      <div>
+        <ul>
+          <div v-for="category in categories"
+              :key="category.id"
+          >
+            <li><a href="#" @click="passInformation(category.id, true)"><i class="fa fa-qrcode"></i>{{category.title}}</a></li>
+          </div>
+        </ul>
+      </div>
+      <div class="profileTab">
+        <ProfileMenuTab></ProfileMenuTab>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import ProfileMenuTab from "./ProfileMenuTab";
+
 export default {
   name: "MenuComponent",
   props: {
     categories: Array
   },
+  components: {ProfileMenuTab},
   methods: {
     passInformation(id, showBool){
       this.$emit('passInformation', id, showBool);
@@ -62,6 +70,7 @@ export default {
   line-height: 4.6em;
   background: #176585;
   user-select: none;
+  box-shadow: 0px 20px 67px -38px rgba(0,0,0,0.75);
 }
 
 .sidebar ul a{
@@ -131,4 +140,13 @@ label #cancel{
 #sidebarCheck:checked ~ label #cancel{
   left: 4.8em;
 }
+
+.profileTab{
+  box-shadow: 0px -20px 59px -21px rgba(0,0,0,0.75);
+  position: absolute;
+  bottom: 0;
+  height: 10%;
+  width: 100%;
+}
+
 </style>
