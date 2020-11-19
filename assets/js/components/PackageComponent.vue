@@ -3,7 +3,7 @@
     <!--    style="border:1px solid #000000;"-->
 
     <div id="canvas-wrapper">
-      <canvas id="wave" height="500px" width="1000px"></canvas>
+      <canvas id="wave" height="300px" width="1000px"></canvas>
       <div id="volume-bar"></div>
     </div>
     <br>
@@ -31,7 +31,6 @@ navigator.getUserMedia = navigator.getUserMedia ||
 let volumeBar;
 let canvas;
 let canvasContext;
-let centerX;
 let centerY;
 let xPos;
 let yOld;
@@ -186,12 +185,29 @@ export default {
       canvasContext.closePath();
     },
     changeBackgroundColorAccordingToVoiceFrequency(average) {
-      let percentage = (average - 240) / (440 - 240) * 100;
+      let percentage = (average - 240) / (410 - 240) * -100 ;
+
+      if(percentage > 100)
+        percentage = 100;
+
+      if(percentage <= 0)
+        percentage = 0;
+
+      console.log(percentage)
+
+
+      percentage = Math.abs(100-Math.abs(percentage));
+
+      if(percentage > 100)
+        percentage = 100;
+
+      if(percentage <= 0)
+        percentage = 0;
+
+      console.log(percentage)
+      console.log("----------------")
 
       let volumeBar = document.getElementById('volume-bar');
-
-      console.log(canvas.height);
-      volumeBar.style.height = canvas.height+'px';
 
       volumeBar.style.backgroundColor = this.greenToRedGradiant(percentage);
     },
@@ -257,7 +273,6 @@ export default {
     window.addEventListener('DOMContentLoaded', (event) => {
       canvas = document.querySelector("canvas");
       canvasContext = canvas.getContext("2d");
-      centerX = canvas.width / 2;
       centerY = canvas.height / 2;
       xPos = 0;
       yOld = centerY * 1.8;
@@ -304,13 +319,18 @@ export default {
 }
 
 #volume-bar {
-  height: 500px;
   width: 30px;
   border: 1px black solid;
 }
 
+canvas{
+  height: 20% !important;
+  width: 90% !important;
+}
+
 #canvas-wrapper * {
-  margin: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
   padding: 20px;
 }
 
