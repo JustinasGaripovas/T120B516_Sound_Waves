@@ -6,4 +6,24 @@
 
     <h1>{{ soundPackage.title }}</h1>
 
+    <div class="container-fluid center">
+        <div id="canvas-wrapper">
+            <canvas id="wave" height="300px" width="1000px"></canvas>
+            <div id="volume-bar"></div>
+        </div>
+        <br>
+        <button class="play" id="play">Play</button>
+        <br>
+        <a class="back">Back</a>
+        <br>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="js/displayer.js" data-file-path="/uploads/music/{{ soundPackage.filename }}"></script>
+    <script src="js/recorder.js"></script>
+
+    {{ parent() }}
 {% endblock %}

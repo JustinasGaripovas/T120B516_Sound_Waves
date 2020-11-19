@@ -15,7 +15,7 @@
 </template>
 
 <script>
-//app.js
+//displayer.js
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 let audioContext = new AudioContext();
 
@@ -42,7 +42,7 @@ const followingBarColor = 'green';
 export default {
   name: "PackageComponent",
   methods: {
-    //app.js
+    //displayer.js
     drawAudio(url) {
       fetch(url)
           .then(response => response.arrayBuffer())

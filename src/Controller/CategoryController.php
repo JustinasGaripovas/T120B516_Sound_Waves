@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends Controller
 {
     /**
-     * @Route("/category/{id}", name="view_category", methods={"GET"})
+     * @Route("/category/{id}", name="view_category")
      */
     public function view(Category $category)
     {

@@ -65,6 +65,11 @@ class SoundPackage
      */
     private $level;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filename;
+
     public function __construct()
     {
         $this->soundFiles = new ArrayCollection();
@@ -168,5 +173,17 @@ class SoundPackage
     public function __toString(): string
     {
         return (string)$this->getTitle();
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(string $filename): self
+    {
+        $this->filename = $filename;
+
+        return $this;
     }
 }

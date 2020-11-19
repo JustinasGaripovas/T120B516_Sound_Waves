@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SoundFile{% endblock %}
+
+{% block body %}
+    <h1>Create new SoundPackage</h1>
+
+    {{ include('sound_package/_form.html.twig') }}
+
+    <a href="{{ path('home') }}">back to list</a>
+{% endblock %}
