@@ -5,7 +5,7 @@
     <br>
     <button class="play" id="play">Play</button>
     <br>
-    <a @click="$router.go(-1)" class="back">Back</a>
+    <a @click="goBack()" class="back">Back</a>
     <br>
   </div>
 </template>
@@ -39,6 +39,9 @@ export default {
   name: "PackageComponent",
   methods: {
     //app.js
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+    },
     drawAudio(url) {
       fetch(url)
           .then(response => response.arrayBuffer())

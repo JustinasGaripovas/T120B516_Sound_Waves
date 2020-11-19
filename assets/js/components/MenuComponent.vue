@@ -11,13 +11,13 @@
         <div v-for="category in categories"
              :key="category.id"
         >
-          <li><a href="#" @click="passInformation(category.id, true)"><i class="fa fa-qrcode"></i>{{category.title}}</a></li>
+          <li><router-link to="/level"><i class="fa fa-qrcode"></i>{{category.title}} </router-link></li>
         </div>
       </ul>
     </div>
   </div>
 </template>
-
+<!--<a href="" @click="passInformation(category.id, true)"><i class="fa fa-qrcode"></i>{{category.title}}</a>-->
 <script>
 export default {
   name: "MenuComponent",
