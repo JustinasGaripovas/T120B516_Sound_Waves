@@ -1,0 +1,23 @@
+{% block body %}
+    <h1>I am a asidebar</h1>
+
+<div class="container-fluid">
+    <input type="checkbox" id="sidebarCheck">
+    <label for="sidebarCheck">
+        <i class="fas fa-bars" id="btn"></i>
+        <i class="fas fa-times" id="cancel"></i>
+    </label>
+    <div class="sidebar">
+        <header>Menu</header>
+        <ul>
+            {% for category in categories %}
+                <li>
+                    <a href="#">
+                        <i class="fa fa-qrcode"></i>{{ category }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

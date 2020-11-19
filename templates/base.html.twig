@@ -15,21 +15,20 @@
         {#        FontAwesome         #}
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
+        {% block styles %}
+
+        {% endblock %}
+
     </head>
     <body>
-{#    <div class="container-fluid">#}
-{#        <div class="row">#}
-{#            <div class="col-sm">a</div>#}
-{#            <div class="col-sm">a</div>#}
-{#        </div>#}
-{#    </div>#}
-{% block body %}
-{#    <div id="app">#}
-{#        <app></app>#}
-{#    </div>#}
-{% endblock %}
-        {% block javascripts %}
+        {% include 'category/sidebar.html.twig' %}
+
+        {% block body %}
+            <h1>I am a base</h1>
         {% endblock %}
-    {{ encore_entry_script_tags('app') }}
+
+        {% block javascripts %}
+
+        {% endblock %}
     </body>
 </html>

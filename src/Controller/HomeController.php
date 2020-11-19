@@ -2,17 +2,18 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends AbstractController
+class HomeController extends Controller
 {
     /**
      * @Route("/", name="default")
      */
     public function index()
     {
-        return $this->render('home/index.html.twig');
-
+        return $this->render('home/index.html.twig',[
+            'categories' => $this->getCategories()
+        ]);
     }
 }

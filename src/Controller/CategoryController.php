@@ -23,6 +23,7 @@ class CategoryController extends AbstractController
             ];
         }
 
+
         return $this->json([
            'categories' => $categoryTitles
         ]);
