@@ -1,7 +1,11 @@
 <template>
   <div class="container-fluid center">
     <!--    style="border:1px solid #000000;"-->
-    <canvas id="wave" height="500px" width="1000px"></canvas>
+
+    <div id="canvas-wrapper">
+      <canvas id="wave" height="500px" width="1000px"></canvas>
+      <div id="volume-bar"></div>
+    </div>
     <br>
     <button class="play" id="play">Play</button>
     <br>
@@ -24,6 +28,7 @@ navigator.getUserMedia = navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia;
 
+let volumeBar;
 let canvas;
 let canvasContext;
 let centerX;
@@ -182,7 +187,13 @@ export default {
     },
     changeBackgroundColorAccordingToVoiceFrequency(average) {
       let percentage = (average - 240) / (440 - 240) * 100;
-      canvas.style.backgroundColor = this.greenToRedGradiant(percentage);
+
+      let volumeBar = document.getElementById('volume-bar');
+
+      console.log(canvas.height);
+      volumeBar.style.height = canvas.height+'px';
+
+      volumeBar.style.backgroundColor = this.greenToRedGradiant(percentage);
     },
     handleAudioProcess(analyser) {
       let average = this.getAverageAudioY(analyser);
@@ -285,4 +296,22 @@ export default {
   border: none;
   color: white;
 }
+
+#canvas-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+#volume-bar {
+  height: 500px;
+  width: 30px;
+  border: 1px black solid;
+}
+
+#canvas-wrapper * {
+  margin: 10px;
+  padding: 20px;
+}
+
 </style>
