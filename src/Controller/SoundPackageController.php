@@ -2,28 +2,40 @@
 
 namespace App\Controller;
 
+use App\Controller;
+use App\Entity\SoundPackage;
 use App\Repository\SoundPackageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SoundPackageController extends AbstractController
+class SoundPackageController extends Controller
 {
     /**
-     * @Route("/sound_package", name="get_sound_package", methods={"POST"})
+     * @Route("/sound_package", name="index_sound_packages")
      */
-    public function getSoundPackage(SoundPackageRepository $soundPackageRepository, Request $request)
+    public function index(SoundPackageRepository $soundPackageRepository, Request $request)
     {
-        $level = (int) $request->request->get('level');
-        $category_id = (int) $request->request->get('category_id');
+        $level = (int) $request->get('level');
+        $category_id = (int) $request->get('category_id');
 
         $validSoundPackages = $soundPackageRepository->findBy(["level" => $level, "category" => $category_id]);
 
-        return $this->json([
-            'sound_packages' => $validSoundPackages],
-            200,
-            [],
-            ['groups' => ['music_list']]);
+        return $this->render("sound_package/index.html.twig", [
+            'categories' => $this->getCategories(),
+            'soundPackages' => $validSoundPackages
+        ]);
+    }
+
+    /**
+     * @Route("/sound_package/{id}", name="view_sound_packages")
+     */
+    public function view(SoundPackage $soundPackage)
+    {
+        return $this->render("sound_package/view.html.twig", [
+            'categories' => $this->getCategories(),
+            'soundPackage' => $soundPackage
+        ]);
     }
 
 
