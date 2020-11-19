@@ -1,6 +1,4 @@
 {% block body %}
-    <h1>I am a asidebar</h1>
-
 <div class="container-fluid">
     <input type="checkbox" id="sidebarCheck">
     <label for="sidebarCheck">
@@ -12,7 +10,7 @@
         <ul>
             {% for category in categories %}
                 <li>
-                    <a href="#">
+                    <a href="{{ path("view_category", {id: category.id}) }}">
                         <i class="fa fa-qrcode"></i>{{ category }}
                     </a>
                 </li>

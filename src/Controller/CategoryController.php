@@ -2,38 +2,22 @@
 
 namespace App\Controller;
 
-use App\Repository\CategoryRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Controller;
+use App\Entity\Category;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CategoryController extends AbstractController
+class CategoryController extends Controller
 {
     /**
-     * @Route("/category", name="get_categories", methods={"GET"})
+     * @Route("/category/{id}", name="view_category", methods={"GET"})
      */
-    public function getAllCategories(CategoryRepository $categoryRepository)
+    public function view(Category $category)
     {
-        $categoryTitles = [];
-
-        foreach ($categoryRepository->findAll() as $category)
-        {
-            $categoryTitles[] = [
-                'id' => $category->getId(),
-                'title' => $category->getTitle()
-            ];
-        }
-
-
-        return $this->json([
-           'categories' => $categoryTitles
-        ]);
-    }
-
-    /**
-     * @Route("/category", name="post_categories", methods={"POST"})
-     */
-    public function postCategory()
-    {
-
+        return $this->render("category/view.html.twig",
+            [
+                'category' => $category,
+                'categories' => $this->getCategories()
+            ]
+        );
     }
 }
