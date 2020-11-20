@@ -1,5 +1,6 @@
 <template>
   <div class="container-fluid center">
+    <!--    <div v-if="soundPackages.length !== 0">-->
     <ul>
       <div v-for="soundPackage in soundPackages"
            :key="soundPackage.id" class="center-div">
@@ -11,6 +12,10 @@
         </li>
       </div>
     </ul>
+    <!--    </div>-->
+    <!--    <div v-else>-->
+    <!--      <p class="center">No tracks</p>-->
+    <!--    </div>-->
   </div>
 </template>
 

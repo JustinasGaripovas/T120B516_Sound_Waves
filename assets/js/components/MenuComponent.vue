@@ -7,22 +7,20 @@
     </label>
     <div class="sidebar">
       <header>Menu</header>
-      <div>
-        <ul>
-          <div v-for="category in categories"
-              :key="category.id"
-          >
-            <li><a href="#" @click="passInformation(category.id, true)"><i class="fa fa-qrcode"></i>{{category.title}}</a></li>
-          </div>
-        </ul>
-      </div>
-      <div class="profileTab">
-        <ProfileMenuTab></ProfileMenuTab>
-      </div>
+      <ul>
+        <div v-for="category in categories"
+             :key="category.id"
+        >
+          <li><router-link to="/level"><i class="fa fa-qrcode"></i>{{category.title}} </router-link></li>
+        </div>
+      </ul>
+    <div class="profileTab">
+      <ProfileMenuTab></ProfileMenuTab>
+    </div>
     </div>
   </div>
 </template>
-
+<!--<a href="" @click="passInformation(category.id, true)"><i class="fa fa-qrcode"></i>{{category.title}}</a>-->
 <script>
 import ProfileMenuTab from "./ProfileMenuTab";
 

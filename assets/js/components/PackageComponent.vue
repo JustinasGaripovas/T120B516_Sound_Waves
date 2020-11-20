@@ -1,11 +1,15 @@
 <template>
   <div class="container-fluid center">
     <!--    style="border:1px solid #000000;"-->
-    <canvas id="wave" height="500px" width="1000px"></canvas>
+
+    <div id="canvas-wrapper">
+      <canvas id="wave" height="300px" width="1000px"></canvas>
+      <div id="volume-bar"></div>
+    </div>
     <br>
     <button class="play" id="play">Play</button>
     <br>
-    <a @click="$router.go(-1)" class="back">Back</a>
+    <a @click="goBack()" class="back">Back</a>
     <br>
   </div>
 </template>
@@ -24,9 +28,9 @@ navigator.getUserMedia = navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia;
 
+let volumeBar;
 let canvas;
 let canvasContext;
-let centerX;
 let centerY;
 let xPos;
 let yOld;
@@ -39,6 +43,9 @@ export default {
   name: "PackageComponent",
   methods: {
     //app.js
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+    },
     drawAudio(url) {
       fetch(url)
           .then(response => response.arrayBuffer())
@@ -181,8 +188,31 @@ export default {
       canvasContext.closePath();
     },
     changeBackgroundColorAccordingToVoiceFrequency(average) {
-      let percentage = (average - 240) / (440 - 240) * 100;
-      canvas.style.backgroundColor = this.greenToRedGradiant(percentage);
+      let percentage = (average - 240) / (410 - 240) * -100 ;
+
+      if(percentage > 100)
+        percentage = 100;
+
+      if(percentage <= 0)
+        percentage = 0;
+
+      console.log(percentage)
+
+
+      percentage = Math.abs(100-Math.abs(percentage));
+
+      if(percentage > 100)
+        percentage = 100;
+
+      if(percentage <= 0)
+        percentage = 0;
+
+      console.log(percentage)
+      console.log("----------------")
+
+      let volumeBar = document.getElementById('volume-bar');
+
+      volumeBar.style.backgroundColor = this.greenToRedGradiant(percentage);
     },
     handleAudioProcess(analyser) {
       let average = this.getAverageAudioY(analyser);
@@ -246,7 +276,6 @@ export default {
     window.addEventListener('DOMContentLoaded', (event) => {
       canvas = document.querySelector("canvas");
       canvasContext = canvas.getContext("2d");
-      centerX = canvas.width / 2;
       centerY = canvas.height / 2;
       xPos = 0;
       yOld = centerY * 1.8;
@@ -285,4 +314,27 @@ export default {
   border: none;
   color: white;
 }
+
+#canvas-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+#volume-bar {
+  width: 30px;
+  border: 1px black solid;
+}
+
+canvas{
+  height: 20% !important;
+  width: 90% !important;
+}
+
+#canvas-wrapper * {
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 20px;
+}
+
 </style>

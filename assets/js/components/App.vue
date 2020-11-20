@@ -8,7 +8,7 @@
       <LevelComponent v-on:passLevel="passLevel" v-if="this.show === true && this.showSub === false"></LevelComponent>
       <PackageListComponent v-bind:level="levelName" v-bind:category="categoryId"></PackageListComponent>
     </div>
-    <router-view v-on:flag="flag"></router-view>
+<!--    <router-view v-on:flag="flag"></router-view>-->
     <div class="footer"></div>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
       show: false,
       categoryId: null,
       levelName: null,
-      showButtons: true,
+      showButtons: false,
       showSub: false
     }
   },
@@ -37,6 +37,10 @@ export default {
   methods:{
     flag() {
       this.showButtons = !this.showButtons;
+      if(this.showSub === true)
+      {
+        this.showSub = false;
+      }
     },
     getCategories() {
       let request = new Request('/category', {method: 'GET'});
@@ -45,6 +49,11 @@ export default {
       }).then((responseText) => {
         this.categories = JSON.parse(responseText).categories
       });
+      console.log(this.showButtons);
+      if(this.showSub === true)
+      {
+        this.showSub = false;
+      }
     },
     passInformation(id, showBool) {
       this.show = showBool;
@@ -55,6 +64,7 @@ export default {
     },
     passLevel(level, boolean) {
       this.levelName = level;
+      console.log("pass level",this.showSub);
       this.showSub = !this.showSub;
     }
   },

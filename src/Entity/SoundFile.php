@@ -30,6 +30,11 @@ class SoundFile
      */
     private $soundPackage;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filename;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -43,6 +48,23 @@ class SoundFile
     public function setSoundPackage(?SoundPackage $soundPackage): self
     {
         $this->soundPackage = $soundPackage;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return (string)$this->getId();
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(string $filename): self
+    {
+        $this->filename = $filename;
 
         return $this;
     }

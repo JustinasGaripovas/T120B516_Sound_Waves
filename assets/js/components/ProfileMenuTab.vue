@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid profileTabContents">
     <div class="col-5 profilePicture">
-      <img class="img-fluid" src="https://c.files.bbci.co.uk/16620/production/_91408619_55df76d5-2245-41c1-8031-07a4da3f313f.jpg">
+      <img class="img-fluid" src="https://static.vets-now.com/uploads/2017/01/Common-emergencies-in-kittens-Vets-Now.jpg">
       <a class="pictureOverlay" href="#">
         <div class="overlayText">
           Change
