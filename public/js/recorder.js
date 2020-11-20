@@ -61,25 +61,20 @@ function drawActiveVoiceWave(average) {
 function changeBackgroundColorAccordingToVoiceFrequency(average) {
     let precentage = (average - 240) / (410 - 240) * -100;
 
-    if(percentage > 100)
-        percentage = 100;
+    if(precentage > 100)
+        precentage = 100;
 
-    if(percentage <= 0)
-        percentage = 0;
-
-    console.log(percentage)
+    if(precentage <= 0)
+        precentage = 0;
 
 
-    percentage = Math.abs(100-Math.abs(percentage));
+    precentage = Math.abs(100-Math.abs(precentage));
 
-    if(percentage > 100)
-        percentage = 100;
+    if(precentage > 100)
+        precentage = 100;
 
-    if(percentage <= 0)
-        percentage = 0;
-
-    console.log(percentage)
-    console.log("----------------")
+    if(precentage <= 0)
+        precentage = 0;
 
     canvas.style.backgroundColor = greenToRedGradiant(precentage);
 }

@@ -9,9 +9,11 @@ use App\Form\SoundFileType;
 use App\Form\SoundPackageType;
 use App\Repository\SoundPackageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -78,7 +80,7 @@ class SoundPackageController extends Controller
     }
 
     /**
-     * @Route("/sound_package/{id}", name="view_sound_packages")
+     * @Route("/{id}", name="view_sound_packages")
      */
     public function view(SoundPackage $soundPackage)
     {
@@ -86,6 +88,17 @@ class SoundPackageController extends Controller
             'categories' => $this->getCategories(),
             'soundPackage' => $soundPackage
         ]);
+    }
+
+    /**
+     * @Route("/{id}/sound/file", name="get_sound_file")
+     */
+    public function getSoundFile(SoundPackage $soundPackage)
+    {
+        $response = new BinaryFileResponse($this->getParameter('upload-directory').'/'.$soundPackage->getFilename());
+        BinaryFileResponse::trustXSendfileTypeHeader();
+
+        return $response;
     }
 
     /**

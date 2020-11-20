@@ -103,7 +103,7 @@ function gradient(a, b) {
     return (b.y-a.y)/(b.x-a.x);
 }
 
-audioUrl = document.currentScript.getAttribute("data-file-path")
+audioUrl = document.currentScript.getAttribute("data-file-path");
 
 console.log(audioUrl)
 
