@@ -76,7 +76,9 @@ function changeBackgroundColorAccordingToVoiceFrequency(average) {
     if(precentage <= 0)
         precentage = 0;
 
-    canvas.style.backgroundColor = greenToRedGradiant(precentage);
+    let volumeBar = document.getElementById("volume-bar");
+    volumeBar.style.height = canvas.height;
+    volumeBar.style.backgroundColor = greenToRedGradiant(precentage);
 }
 
 function handleAudioProcess(analyser) {
