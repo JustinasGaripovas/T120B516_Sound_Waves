@@ -22,6 +22,6 @@
 
 {% block javascripts %}
     <script src="/js/displayer.js" data-file-path="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ path("get_sound_file", {id:soundPackage.id}) }}"></script>
-    <script src="/js/recorder.js"></script>
+    <script src="/js/recorder.js" data-file-path="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ path("get_sound_file", {id:soundPackage.id}) }}"></script>
     {{ parent() }}
 {% endblock %}

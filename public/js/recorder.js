@@ -4,6 +4,8 @@ navigator.getUserMedia = navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia;
 
+audioUrl = document.currentScript.getAttribute("data-file-path");
+
 let canvas;
 let canvasContext;
 let centerX;
@@ -26,8 +28,8 @@ function normalize(val, max, min){ return (val - min) / (max - min); }
 
 function drawFollowingBar() {
     canvasContext.beginPath();
-    canvasContext.fillRect(0, centerY + 50, xPos, 20);
-    canvasContext.fillStyle = 'green';
+    canvasContext.fillRect(0, centerY + 140, xPos, 15);
+    canvasContext.fillStyle = '#42FF00';
     canvasContext.fill();
     canvasContext.lineWidth = 2;
     canvasContext.closePath();
@@ -105,6 +107,10 @@ function greenToRedGradiant(perc) {
 
 function successCallback(stream) {
     audioContext = new AudioContext();
+
+    var audio = new Audio(audioUrl);
+    var didPlayAudio = false;
+
     let analyser = audioContext.createAnalyser();
     let microphone = audioContext.createMediaStreamSource(stream);
     let javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
@@ -119,6 +125,12 @@ function successCallback(stream) {
     javascriptNode.onaudioprocess = function () {
         handleAudioProcess(analyser);
 
+        if(!didPlayAudio)
+        {
+            audio.play();
+            didPlayAudio = true;
+        }
+
     }
 }
 
@@ -130,6 +142,7 @@ function handleVoiceRecordingAndDrawing() {
             function (stream) {
                 document.getElementById(playButtonId).onclick = function () {
                     successCallback(stream);
+
                     document.getElementById(playButtonId).onclick = null;
                 }
             },
