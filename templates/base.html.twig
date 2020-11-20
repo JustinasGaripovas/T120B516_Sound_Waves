@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>{% block title %}Test!{% endblock %}</title>
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('build/app.css') }}"/>
+            <link rel="stylesheet" href="/css/app.css"/>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         {% endblock %}
 
@@ -21,10 +21,9 @@
 
     </head>
     <body>
-        {% include 'category/sidebar.html.twig' %}
-
+    {% include 'category/sidebar.html.twig' %}
         {% block body %}
-            <h1>I am a base</h1>
+
         {% endblock %}
 
         {% block javascripts %}

@@ -68,7 +68,7 @@ class SoundFileController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="sound_file_show", methods={"GET"})
+     * @Route("/{id}", name="sound_file_show")
      */
     public function show(SoundFile $soundFile): Response
     {
@@ -78,7 +78,7 @@ class SoundFileController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="sound_file_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="sound_file_edit")
      */
     public function edit(Request $request, SoundFile $soundFile): Response
     {
