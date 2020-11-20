@@ -18,7 +18,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class SoundFileController extends AbstractController
 {
     /**
-     * @Route("/", name="sound_file_index", methods={"GET"})
+     * @Route("/", name="sound_file_index")
      */
     public function index(SoundFileRepository $soundFileRepository): Response
     {
@@ -28,7 +28,7 @@ class SoundFileController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="sound_file_new", methods={"GET","POST"})
+     * @Route("/new", name="sound_file_new")
      */
     public function new(Request $request, SluggerInterface $slugger): Response
     {
@@ -68,7 +68,7 @@ class SoundFileController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="sound_file_show", methods={"GET"})
+     * @Route("/{id}", name="sound_file_show")
      */
     public function show(SoundFile $soundFile): Response
     {
@@ -78,7 +78,7 @@ class SoundFileController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="sound_file_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="sound_file_edit")
      */
     public function edit(Request $request, SoundFile $soundFile): Response
     {

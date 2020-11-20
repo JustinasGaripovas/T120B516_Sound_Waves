@@ -4,16 +4,17 @@
 
 {% block body %}
     <div class="container-fluid center">
-        <ul>
-            {% for soundPackage in soundPackages %}
-                <li class="item separate">
-
-                    <a href="{{ path("view_sound_packages", {id: soundPackage.id}) }}">
-                        {{ soundPackage.title }}
-                    </a>
-
-                </li>
-            {% endfor %}
-        </ul>
+        <p class="main-title">Sound Waves</p>
+        <div class="margin-top">
+            <ul>
+                {% for soundPackage in soundPackages %}
+                    <li class="item separate">
+                        <a href="{{ path("view_sound_packages", {id: soundPackage.id}) }}">
+                            {{ soundPackage.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 {% endblock %}
