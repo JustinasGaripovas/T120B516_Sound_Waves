@@ -3,7 +3,25 @@
 {% block title %}Hello SoundPackageController!{% endblock %}
 
 {% block body %}
-<div>
+
     <h1>{{ soundPackage.title }}</h1>
-</div>
+
+    <div class="container-fluid center">
+        <div id="canvas-wrapper">
+            <canvas id="wave" height="300px" width="1000px"></canvas>
+            <div id="volume-bar"></div>
+        </div>
+        <br>
+        <button class="play" id="play">Play</button>
+        <br>
+        <a class="back">Back</a>
+        <br>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/displayer.js" data-file-path="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ path("get_sound_file", {id:soundPackage.id}) }}"></script>
+    <script src="/js/recorder.js"></script>
+    {{ parent() }}
 {% endblock %}
