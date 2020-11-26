@@ -3,21 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User
+class User implements UserInterface
 {
-    use SoftDeleteableEntity;
-    use TimestampableEntity;
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -36,33 +30,25 @@ class User
     private $secondName;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="json")
      */
-    private $passwordEncoded;
+    private $roles = [];
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
-    private $role = [];
+    private $password;
 
     /**
      * @ORM\OneToMany(targetEntity=SoundPackage::class, mappedBy="createdBy")
      */
     private $soundPackages;
-
-    public function __construct()
-    {
-        $roles[] = 'ROLE_USER';
-        $this->soundPackages = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -105,26 +91,46 @@ class User
         return $this;
     }
 
-    public function getPasswordEncoded(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
     {
-        return $this->passwordEncoded;
+        return (string) $this->email;
     }
 
-    public function setPasswordEncoded(string $passwordEncoded): self
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        $this->passwordEncoded = $passwordEncoded;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
-    public function getRole(): ?array
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
     {
-        return $this->role;
+        return (string) $this->password;
     }
 
-    public function setRole(array $role): self
+    public function setPassword(string $password): self
     {
-        $this->role = $role;
+        $this->password = $password;
 
         return $this;
     }
@@ -158,6 +164,23 @@ class User
         }
 
         return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function __toString()
