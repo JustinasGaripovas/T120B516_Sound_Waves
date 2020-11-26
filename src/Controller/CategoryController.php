@@ -13,6 +13,7 @@ class CategoryController extends Controller
      */
     public function view(Category $category)
     {
+
         return $this->render("category/view.html.twig",
             [
                 'category' => $category,

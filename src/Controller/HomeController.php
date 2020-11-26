@@ -12,8 +12,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = $this->getUser() !== null ? $this->getUser()->getUsername() : null;
         return $this->render('home/index.html.twig',[
-            'categories' => $this->getCategories()
+            'categories' => $this->getCategories(),
+            'user' => $user
         ]);
     }
 }
