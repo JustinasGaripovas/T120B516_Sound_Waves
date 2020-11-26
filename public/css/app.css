@@ -4,6 +4,7 @@
     padding-bottom: 0.15em;
     border-bottom: 0.03em solid grey;
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -32,6 +33,7 @@
     line-height: 4.6em;
     background: #176585;
     user-select: none;
+    box-shadow: 0px 20px 67px -38px rgba(0,0,0,0.75);
 }
 
 .sidebar ul a {
@@ -46,7 +48,7 @@
     transition: .3s;
 }
 
-.sidebar>ul li:hover a {
+.sidebar > ul li:hover a {
     padding-left: 3.5em;
     text-decoration: none;
 }
@@ -102,6 +104,7 @@ label #cancel {
 #sidebarCheck:checked ~ label #cancel {
     left: 4.8em;
 }
+
 .center {
     text-align-last: center;
 }
@@ -134,7 +137,7 @@ label #cancel {
     border: 1px black solid;
 }
 
-canvas{
+canvas {
     height: 20% !important;
     width: 90% !important;
 }
@@ -144,6 +147,7 @@ canvas{
     margin-right: 10px;
     padding: 20px;
 }
+
 .item {
     background-color: grey;
     padding: 0.5em;
@@ -152,12 +156,15 @@ canvas{
     text-decoration: none;
     color: black;
 }
+
 .separate {
     margin-bottom: 0.5em;
 }
+
 .center-div {
     margin: auto;
 }
+
 .secondary-title {
     font-size: 2em;
     text-align: center;
@@ -165,26 +172,32 @@ canvas{
     width: 25%;
     margin: auto;
 }
+
 .main-page {
     margin-top: 5em;
 }
+
 .intro {
     width: 40%;
     margin: auto;
     background-color: #C2C2C2;
     padding: 2em 3em;
 }
+
 .top {
     margin-top: 2em;
     text-align: center;
 }
+
 .margin-fix {
     margin-bottom: 0;
 }
-.top-level{
+
+.top-level {
     margin-top: 3em;
 }
-.level{
+
+.level {
     background-color: grey;
     border: none;
     color: black;
@@ -195,20 +208,101 @@ canvas{
     margin-bottom: 2em;
     outline-color: #0d3545;
 }
-.main{
+
+.main {
     display: inline-grid;
 }
 
 .center-level {
     text-align-last: center;
 }
+
 .margin-top {
     margin-top: 3em;
 }
-.margin-top>ul {
+
+.margin-top > ul {
     list-style: none;
 }
-.item.separate>a {
+
+.item.separate > a {
     text-decoration: none;
     color: black;
+}
+
+.profileTabContents {
+    background-color: #176585;
+    display: flex;
+    height: 100%;
+    padding: 0;
+}
+
+.profilePicture {
+    box-shadow: 0.25em 0 1.2em 0 rgba(0, 0, 0, 0.25);
+    text-align: center;
+    display: flex;
+}
+
+.profilePicture img {
+    margin: auto;
+    height: 75%;
+    border-radius: 50%;
+}
+
+.pictureOverlay {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 75%;
+    width: 75%;
+    opacity: 0;
+    transition: .5s ease;
+    color: #fff;
+    background-color: #525252;
+    border-radius: 50%;
+}
+
+.overlayText {
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.profilePicture:hover .pictureOverlay {
+    opacity: 0.75;
+}
+
+.profileName {
+    display: block;
+    text-align: center;
+    font-family: arial, courier, helvetica;
+    height: 100%;
+    display: inherit;
+}
+
+.profileName a {
+    margin: auto;
+    font-size: 20px;
+    color: #fff;
+    transition: .5s ease;
+}
+
+.profileName a:hover {
+    text-decoration: none;
+    font-size: 21px;
+}
+
+.profileTab {
+    box-shadow: 0px -20px 59px -21px rgba(0,0,0,0.75);
+    position: absolute;
+    bottom: 0;
+    height: 10%;
+    width: 100%;
 }
