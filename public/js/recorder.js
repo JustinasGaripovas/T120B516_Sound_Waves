@@ -13,6 +13,11 @@ let centerY;
 let xPos;
 let yOld;
 
+let recorderAverage = 0;
+let finalScore = 0;
+let scoredSum = 0;
+let tickCount = 0;
+
 window.addEventListener('DOMContentLoaded', (event) => {
     canvas = document.querySelector("canvas");
     canvasContext = canvas.getContext("2d");
@@ -51,7 +56,7 @@ function getAverageAudioY(analyser) {
 function drawActiveVoiceWave(average) {
     canvasContext.beginPath();
     canvasContext.moveTo(xPos, yOld);
-    canvasContext.lineTo(xPos += 6, average);
+    canvasContext.lineTo(xPos += 10, average);
     yOld = average
     canvasContext.strokeStyle = '#0b49e6';
     canvasContext.lineWidth = 2;
@@ -85,10 +90,24 @@ function changeBackgroundColorAccordingToVoiceFrequency(average) {
 
 function handleAudioProcess(analyser) {
     let average = getAverageAudioY(analyser);
+    recorderAverage = average;
+
+    let canvas = document.querySelector("canvas");
+    let ctx = canvas.getContext("2d");
 
     drawActiveVoiceWave(average);
     drawFollowingBar();
     changeBackgroundColorAccordingToVoiceFrequency(average)
+
+    ctx.rect(xPos - (150/2), canvas.height/2 - (canvas.height/2), 500, canvas.height)
+
+    let averageOfSong = (displayerPoints[(xPos/10)-1].y);
+    let newAverage = -1 * ((average) - centerY * 1.8)+65;
+    scoredSum += Math.abs(newAverage - averageOfSong);
+    tickCount++;
+    finalScore = scoredSum/tickCount;
+    console.log(finalScore);
+    document.getElementById('score').innerHTML = finalScore.toString()
 }
 
 function greenToRedGradiant(perc) {
@@ -130,7 +149,6 @@ function successCallback(stream) {
             audio.play();
             didPlayAudio = true;
         }
-
     }
 }
 
@@ -152,4 +170,28 @@ function handleVoiceRecordingAndDrawing() {
     } else {
         console.log("getUserMedia not supported");
     }
+}
+
+// -     ----------------------------------------------------------------
+
+canvas.onmousewheel = function (event){
+    var mousex = event.clientX - canvas.offsetLeft;
+    var mousey = event.clientY - canvas.offsetTop;
+    var wheel = event.wheelDelta/120;//n or -n
+
+    var zoom = 1 + wheel/2;
+
+    context.translate(
+        originx,
+        originy
+    );
+    context.scale(zoom,zoom);
+    context.translate(
+        -( mousex / scale + originx - mousex / ( scale * zoom ) ),
+        -( mousey / scale + originy - mousey / ( scale * zoom ) )
+    );
+
+    originx = ( mousex / scale + originx - mousex / ( scale * zoom ) );
+    originy = ( mousey / scale + originy - mousey / ( scale * zoom ) );
+    scale *= zoom;
 }

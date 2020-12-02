@@ -1,6 +1,8 @@
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 let audioContext = new AudioContext();
 
+let displayerPoints = [];
+
 const drawAudio = url => {
     fetch(url)
         .then(response => response.arrayBuffer())
@@ -10,7 +12,10 @@ const drawAudio = url => {
 
 const filterData = audioBuffer => {
     const rawData = audioBuffer.getChannelData(0);
-    const samples = 70;
+    const samples = 600;
+
+    debugger
+
     const blockSize = Math.floor(rawData.length / samples);
     const filteredData = [];
     for (let i = 0; i < samples; i++) {
@@ -25,6 +30,7 @@ const filterData = audioBuffer => {
 };
 
 const normalizeData = filteredData => {
+    debugger
     const multiplier = Math.pow(Math.max(...filteredData), -1);
     return filteredData.map(n => n * multiplier);
 }
@@ -84,9 +90,13 @@ function draw(ctx, points) {
         preP = curP;
     }
     ctx.stroke();
+
+
+
 }
 
 const drawSeq = normalizeData => {
+    debugger
     let canvas = document.querySelector("canvas");
     let ctx = canvas.getContext("2d");
     let centerX = canvas.width / 2;
@@ -95,9 +105,10 @@ const drawSeq = normalizeData => {
     ctx.moveTo(0, centerY);
 
     const points = getPoints(normalizeData, centerY);
-
+    displayerPoints = points;
     draw(ctx, points);
 }
+
 
 function gradient(a, b) {
     return (b.y-a.y)/(b.x-a.x);
