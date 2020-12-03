@@ -29,12 +29,15 @@ class SoundPackageController extends Controller
     {
         $level = (int) $request->get('level');
         $category_id = (int) $request->get('category_id');
+        $user = $this->getUser() !== null ? $this->getUser()->getUsername() : null;
+
 
         $validSoundPackages = $soundPackageRepository->findBy(["level" => $level, "category" => $category_id]);
 
         return $this->render("sound_package/index.html.twig", [
             'categories' => $this->getCategories(),
-            'soundPackages' => $validSoundPackages
+            'soundPackages' => $validSoundPackages,
+            'user' => $user
         ]);
     }
 

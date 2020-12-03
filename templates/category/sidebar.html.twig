@@ -35,8 +35,9 @@
             </div>
         </div>
         {% else %}
-            <div class="profileTab">
-                log in
+            <div class="profileTab no-login">
+                <p class="top-a-text"><a href="{{ path('app_login') }}">Log in</a></p>
+                <p class="top-a-text"><a href="{{ path('app_register') }}">Resgister</a></p>
             </div>
         {% endif %}
     </div>
