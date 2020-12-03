@@ -3,17 +3,18 @@
 namespace App\Controller;
 
 use App\Controller;
+use App\Entity\Score;
 use App\Entity\SoundFile;
 use App\Entity\SoundPackage;
-use App\Form\SoundFileType;
+use App\Entity\User;
+use App\Form\ScoreType;
 use App\Form\SoundPackageType;
 use App\Repository\SoundPackageRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -89,7 +90,9 @@ class SoundPackageController extends Controller
     {
         return $this->render("sound_package/view.html.twig", [
             'categories' => $this->getCategories(),
-            'soundPackage' => $soundPackage
+            'user' => $this->getUser(),
+            'soundPackage' => $soundPackage,
+            'scoreForm' => $this->createForm(ScoreType::class)->createView()
         ]);
     }
 
@@ -118,5 +121,29 @@ class SoundPackageController extends Controller
         return $this->redirectToRoute('default');
     }
 
+    /**
+     * @Route("/score/submit", name="sound_package_submit_score")
+     */
+    public function submit(Request $request, UserRepository $repository)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $scoreForm = $request->request->get("score");
+        $score = $scoreForm['score'];
+        $userId = $scoreForm['user_id'];
 
+        $user = $repository->findOneBy(['id' => $userId]);
+
+        assert($user instanceof User);
+
+        try {
+            $scoreObject = new Score($score, $user);
+            $entityManager->persist($scoreObject);
+            $entityManager->flush();
+        }catch (\Exception $exception)
+        {
+            $this->addFlash('danger', 'Score submit failed.');
+        }
+
+        return $this->redirectToRoute('default');
+    }
 }

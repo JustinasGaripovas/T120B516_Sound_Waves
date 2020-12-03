@@ -27,6 +27,13 @@ class Score
      */
     private $user_id;
 
+
+    public function __construct(int $score, User $user)
+    {
+        $this->score = $score;
+        $this->user_id = $user;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -37,22 +44,8 @@ class Score
         return $this->score;
     }
 
-    public function setScore(int $score): self
-    {
-        $this->score = $score;
-
-        return $this;
-    }
-
     public function getUserId(): ?User
     {
         return $this->user_id;
-    }
-
-    public function setUserId(?User $user_id): self
-    {
-        $this->user_id = $user_id;
-
-        return $this;
     }
 }

@@ -5,6 +5,7 @@ navigator.getUserMedia = navigator.getUserMedia ||
     navigator.mozGetUserMedia;
 
 audioUrl = document.currentScript.getAttribute("data-file-path");
+userId = document.currentScript.getAttribute("data-user-id");
 
 let canvas;
 let canvasContext;
@@ -21,6 +22,9 @@ let tickCount = 0;
 window.addEventListener('DOMContentLoaded', (event) => {
     canvas = document.querySelector("canvas");
     canvasContext = canvas.getContext("2d");
+
+    document.getElementById('score_user_id').value = userId;
+
     centerX = canvas.width / 2;
     centerY = canvas.height / 2;
     xPos = 0;
@@ -101,6 +105,12 @@ function handleAudioProcess(analyser) {
 
     let rawScore = calculateRawScore(average);
     displayResultLevelFrom(rawScore);
+    setHiddenScore(rawScore);
+}
+
+function setHiddenScore(rawScore)
+{
+    document.getElementById('score_score').value = rawScore;
 }
 
 function calculateRawScore(average)

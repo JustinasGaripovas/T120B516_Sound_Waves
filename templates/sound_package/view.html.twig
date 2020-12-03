@@ -16,6 +16,7 @@
                     <div>
                         <a href="#playing" class="play" id="play">Play</a>
                         <a href="{{ path("index_sound_packages") }}" class="back">Back</a>
+                        {{ form(scoreForm, {action:path("sound_package_submit_score")}) }}
                     </div>
                 </div>
             </div>
@@ -26,6 +27,6 @@
 
 {% block javascripts %}
     <script src="/js/displayer.js" data-file-path="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ path("get_sound_file", {id:soundPackage.id}) }}"></script>
-    <script src="/js/recorder.js" data-file-path="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ path("get_sound_file", {id:soundPackage.id}) }}"></script>
+    <script src="/js/recorder.js" data-user-id="{{ app.user?user.id:null }}" data-file-path="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ path("get_sound_file", {id:soundPackage.id}) }}"></script>
     {{ parent() }}
 {% endblock %}
