@@ -13,11 +13,12 @@ class CategoryController extends Controller
      */
     public function view(Category $category)
     {
-
+        $user = $this->getUser() !== null ? $this->getUser()->getUsername() : null;
         return $this->render("category/view.html.twig",
             [
                 'category' => $category,
-                'categories' => $this->getCategories()
+                'categories' => $this->getCategories(),
+                'user' => $user
             ]
         );
     }

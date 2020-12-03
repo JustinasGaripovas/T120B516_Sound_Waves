@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface
 {
@@ -49,6 +52,21 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=SoundPackage::class, mappedBy="createdBy")
      */
     private $soundPackages;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Profile::class, mappedBy="user_id", cascade={"persist", "remove"})
+     */
+    private $profile;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Score::class, mappedBy="user_id")
+     */
+    private $scores;
+
+    public function __construct()
+    {
+        $this->scores = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -186,5 +204,53 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->getFirstName().' '.$this->getSecondName();
+    }
+
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?Profile $profile): self
+    {
+        $this->profile = $profile;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newUser_id = null === $profile ? null : $this;
+        if ($profile->getUserId() !== $newUser_id) {
+            $profile->setUserId($newUser_id);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Score[]
+     */
+    public function getScores(): Collection
+    {
+        return $this->scores;
+    }
+
+    public function addScore(Score $score): self
+    {
+        if (!$this->scores->contains($score)) {
+            $this->scores[] = $score;
+            $score->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScore(Score $score): self
+    {
+        if ($this->scores->removeElement($score)) {
+            // set the owning side to null (unless already changed)
+            if ($score->getUserId() === $this) {
+                $score->setUserId(null);
+            }
+        }
+
+        return $this;
     }
 }

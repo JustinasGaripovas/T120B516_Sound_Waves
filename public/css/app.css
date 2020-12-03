@@ -33,7 +33,7 @@
     line-height: 4.6em;
     background: #176585;
     user-select: none;
-    box-shadow: 0px 20px 67px -38px rgba(0,0,0,0.75);
+    box-shadow: 0px 20px 67px -38px rgba(0, 0, 0, 0.75);
 }
 
 .sidebar ul a {
@@ -300,9 +300,43 @@ canvas {
 }
 
 .profileTab {
-    box-shadow: 0px -20px 59px -21px rgba(0,0,0,0.75);
+    box-shadow: 0px -20px 59px -21px rgba(0, 0, 0, 0.75);
     position: absolute;
     bottom: 0;
     height: 10%;
     width: 100%;
+}
+
+.registration-width {
+    width: 41%;
+}
+
+.no-login {
+    display: flex;
+    justify-content: space-around;
+}
+
+.top-a-text a {
+    font-size: 1.2em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+}
+
+.top-a-text a:hover {
+    color: #0B7FC7;
+    text-decoration: none;
+}
+
+.top-a-text {
+    margin-top: 1.3em;
+}
+
+.form-width {
+    width: 30%;
+    margin: auto;
+}
+
+.margin-top .form-width label {
+    position: relative;
 }
