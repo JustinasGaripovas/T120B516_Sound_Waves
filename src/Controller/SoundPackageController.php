@@ -131,17 +131,13 @@ class SoundPackageController extends Controller
         $score = $scoreForm['score'];
         $userId = $scoreForm['user_id'];
 
-        $user = $repository->findOneBy(['id' => $userId]);
+        if(!$this->isGranted("IS_AUTHENTICATED_ANONYMOUSLY"))
+        {
+            $user = $repository->findOneBy(['id' => $userId]);
 
-        assert($user instanceof User);
-
-        try {
             $scoreObject = new Score($score, $user);
             $entityManager->persist($scoreObject);
             $entityManager->flush();
-        }catch (\Exception $exception)
-        {
-            $this->addFlash('danger', 'Score submit failed.');
         }
 
         return $this->redirectToRoute('default');
