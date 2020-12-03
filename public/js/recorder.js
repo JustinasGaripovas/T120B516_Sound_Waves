@@ -56,7 +56,7 @@ function getAverageAudioY(analyser) {
 function drawActiveVoiceWave(average) {
     canvasContext.beginPath();
     canvasContext.moveTo(xPos, yOld);
-    canvasContext.lineTo(xPos += 10, average);
+    canvasContext.lineTo(xPos += 2, average);
     yOld = average
     canvasContext.strokeStyle = '#0b49e6';
     canvasContext.lineWidth = 2;
@@ -99,15 +99,41 @@ function handleAudioProcess(analyser) {
     drawFollowingBar();
     changeBackgroundColorAccordingToVoiceFrequency(average)
 
-    ctx.rect(xPos - (150/2), canvas.height/2 - (canvas.height/2), 500, canvas.height)
+    let rawScore = calculateRawScore(average);
+    displayResultLevelFrom(rawScore);
+}
 
-    let averageOfSong = (displayerPoints[(xPos/10)-1].y);
-    let newAverage = -1 * ((average) - centerY * 1.8)+65;
-    scoredSum += Math.abs(newAverage - averageOfSong);
+function calculateRawScore(average)
+{
+    let averageOfSong = Math.floor((displayerPoints[(xPos / 2) - 1].y));
+    scoredSum += Math.abs(average - averageOfSong);
     tickCount++;
-    finalScore = scoredSum/tickCount;
-    console.log(finalScore);
-    document.getElementById('score').innerHTML = finalScore.toString()
+    finalScore = Math.floor(scoredSum / tickCount);
+
+    return finalScore;
+}
+
+function scoreToString(finalScore) {
+    if (finalScore > 50) {
+        return "Very inaccurate"
+    } else if (finalScore > 40) {
+        return "Inaccurate"
+    } else if (finalScore > 30) {
+        return "Average accuracy"
+    } else if (finalScore > 20) {
+        return "Slightly accurate"
+    } else if (finalScore > 10) {
+        return "Accurate"
+    } else if (finalScore > 0) {
+        return "Very accurate"
+    }else if (finalScore <= 0) {
+        return "Very accurate"
+    }
+}
+
+function displayResultLevelFrom(finalScore)
+{
+    document.getElementById('score').innerHTML = scoreToString(finalScore)
 }
 
 function greenToRedGradiant(perc) {

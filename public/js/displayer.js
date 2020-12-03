@@ -12,9 +12,7 @@ const drawAudio = url => {
 
 const filterData = audioBuffer => {
     const rawData = audioBuffer.getChannelData(0);
-    const samples = 600;
-
-    debugger
+    const samples = Math.floor(canvas.width / 2);
 
     const blockSize = Math.floor(rawData.length / samples);
     const filteredData = [];
