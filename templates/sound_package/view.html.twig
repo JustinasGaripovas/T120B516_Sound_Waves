@@ -3,21 +3,23 @@
 {% block title %}Hello SoundPackageController!{% endblock %}
 
 {% block body %}
-
-    <h1 class="center">{{ soundPackage.title }}</h1>
-
-    <div class="container-fluid center">
-        <div id="canvas-wrapper">
-            <canvas id="wave" height="300px" width="1000px"></canvas>
-            <div id="volume-bar"></div>
+    <div class="container-fluid">
+        <p class="main-title">{{ soundPackage.title }}</p>
+        <div class="main-page">
+            <div class="container-fluid center">
+                <div id="canvas-wrapper">
+                    <canvas id="wave" height="300px" width="1000px"></canvas>
+                    <div id="volume-bar"></div>
+                </div>
+                <div class="container">
+                    <h1 id="score"></h1>
+                    <div>
+                        <a href="#playing" class="play" id="play">Play</a>
+                        <a href="{{ path("index_sound_packages") }}" class="back">Back</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <br>
-        <button class="play" id="play">Play</button>
-        <br>
-        <h1 id="score">-</h1>
-
-        <a class="back">Back</a>
-        <br>
     </div>
 
 {% endblock %}
