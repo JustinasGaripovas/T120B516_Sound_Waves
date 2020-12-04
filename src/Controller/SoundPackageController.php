@@ -131,7 +131,7 @@ class SoundPackageController extends Controller
         $score = $scoreForm['score'];
         $userId = $scoreForm['user_id'];
 
-        if(!$this->isGranted("IS_AUTHENTICATED_ANONYMOUSLY"))
+        if($this->isGranted("IS_AUTHENTICATED_FULLY"))
         {
             $user = $repository->findOneBy(['id' => $userId]);
 
