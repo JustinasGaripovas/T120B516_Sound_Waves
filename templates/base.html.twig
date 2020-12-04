@@ -22,6 +22,24 @@
     </head>
     <body>
     {% include 'category/sidebar.html.twig' %}
+
+        <div class="container m-1" style="position: absolute; left: 80%; width: 30%;">
+
+            <div >
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+                {% for message in app.flashes('danger') %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
         {% block body %}
 
         {% endblock %}

@@ -124,20 +124,26 @@ class SoundPackageController extends Controller
     /**
      * @Route("/score/submit", name="sound_package_submit_score")
      */
-    public function submit(Request $request, UserRepository $repository)
+    public function submit(Request $request, UserRepository $repository, SoundPackageRepository $soundPackageRepository)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $scoreForm = $request->request->get("score");
         $score = $scoreForm['score'];
         $userId = $scoreForm['user_id'];
+        $soundPackageId = $scoreForm['sound_package_id'];
 
         if($this->isGranted("IS_AUTHENTICATED_FULLY"))
         {
             $user = $repository->findOneBy(['id' => $userId]);
+            $soundPackage = $soundPackageRepository->findOneBy(['id' => $soundPackageId]);
 
-            $scoreObject = new Score($score, $user);
+            $scoreObject = new Score($score, $user, $soundPackage);
             $entityManager->persist($scoreObject);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Score sent.');
+        }else{
+            $this->addFlash('danger', 'User is not logged in.');
         }
 
         return $this->redirectToRoute('default');

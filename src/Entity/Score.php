@@ -33,10 +33,11 @@ class Score
     private $sound_package_id;
 
 
-    public function __construct(int $score, User $user)
+    public function __construct(int $score, User $user, SoundPackage $soundPackage)
     {
         $this->score = $score;
         $this->user_id = $user;
+        $this->sound_package_id = $soundPackage;
     }
 
     public function getId(): ?int

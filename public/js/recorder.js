@@ -6,6 +6,7 @@ navigator.getUserMedia = navigator.getUserMedia ||
 
 audioUrl = document.currentScript.getAttribute("data-file-path");
 userId = document.currentScript.getAttribute("data-user-id");
+soundPackageId = document.currentScript.getAttribute("data-sound-package-id");
 
 let canvas;
 let canvasContext;
@@ -24,6 +25,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     canvasContext = canvas.getContext("2d");
 
     document.getElementById('score_user_id').value = userId;
+    document.getElementById('score_sound_package_id').value = soundPackageId;
 
     centerX = canvas.width / 2;
     centerY = canvas.height / 2;

@@ -18,6 +18,7 @@ class ScoreType extends AbstractType
         $builder
             ->add('score', HiddenType::class)
             ->add('user_id', HiddenType::class)
+            ->add('sound_package_id', HiddenType::class)
             ->add('submit', SubmitType::class,[
                 'label' => "Submit score",
                 'attr' => [

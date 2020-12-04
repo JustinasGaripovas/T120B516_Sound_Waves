@@ -27,6 +27,6 @@
 
 {% block javascripts %}
     <script src="/js/displayer.js" data-file-path="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ path("get_sound_file", {id:soundPackage.id}) }}"></script>
-    <script src="/js/recorder.js" data-user-id="{{ app.user?user.id:null }}" data-file-path="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ path("get_sound_file", {id:soundPackage.id}) }}"></script>
+    <script src="/js/recorder.js" data-sound-package-id="{{ soundPackage.id }}" data-user-id="{{ app.user?user.id:null }}" data-file-path="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ path("get_sound_file", {id:soundPackage.id}) }}"></script>
     {{ parent() }}
 {% endblock %}
