@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ScoreRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ScoreRepository::class)
@@ -30,14 +31,14 @@ class Score
     /**
      * @ORM\ManyToOne(targetEntity=SoundPackage::class, inversedBy="scores")
      */
-    private $sound_package_id;
+    private $sound_file;
 
 
-    public function __construct(int $score, User $user, SoundPackage $soundPackage)
+    public function __construct(int $score, UserInterface $user, SoundPackage $soundPackage)
     {
         $this->score = $score;
         $this->user_id = $user;
-        $this->sound_package_id = $soundPackage;
+        $this->sound_file = $soundPackage;
     }
 
     public function getId(): ?int
@@ -50,20 +51,25 @@ class Score
         return $this->score;
     }
 
-    public function getUserId(): ?User
+    public function getUserId(): ?UserInterface
     {
         return $this->user_id;
     }
 
-    public function getSoundPackageId(): ?SoundPackage
+    public function getSoundFile(): ?SoundPackage
     {
-        return $this->sound_package_id;
+        return $this->sound_file;
     }
 
-    public function setSoundPackageId(?SoundPackage $sound_package_id): self
+    public function setSoundFile(?SoundPackage $sound_file): self
     {
-        $this->sound_package_id = $sound_package_id;
+        $this->sound_file = $sound_file;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return (string)$this->getScore();
     }
 }

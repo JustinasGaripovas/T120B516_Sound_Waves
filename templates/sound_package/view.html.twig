@@ -16,7 +16,21 @@
                     <div>
                         <a href="#playing" class="play" id="play">Play</a>
                         <a href="{{ path("index_sound_packages") }}" class="back">Back</a>
-                        {{ form(scoreForm, {action:path("sound_package_submit_score")}) }}
+                        {{ form(scoreForm, {action:path("sound_package_submit_score", {sound_id: soundId})}) }}
+                    </div>
+                    <div class="scoreBoard">
+                        <table class="table">
+                            <tr class="thead-dark">
+                                <th scope="col">Nr.</th>
+                                <th scope="col">Score</th>
+                            </tr>
+                            {% for score in scores %}
+                            <tr>
+                                <td scope="row">{{ loop.index }}</td>
+                                <td>{{ score }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
                     </div>
                 </div>
             </div>

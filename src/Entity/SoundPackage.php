@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -71,7 +72,7 @@ class SoundPackage
     private $filename;
 
     /**
-     * @ORM\OneToMany(targetEntity=Score::class, mappedBy="sound_package_id")
+     * @ORM\OneToMany(targetEntity=Score::class, mappedBy="sound_file")
      */
     private $scores;
 
@@ -86,12 +87,12 @@ class SoundPackage
         return $this->id;
     }
 
-    public function getCreatedBy(): ?User
+    public function getCreatedBy(): ?UserInterface
     {
         return $this->createdBy;
     }
 
-    public function setCreatedBy(?User $createdBy): self
+    public function setCreatedBy(?UserInterface $createdBy): self
     {
         $this->createdBy = $createdBy;
 
@@ -205,7 +206,7 @@ class SoundPackage
     {
         if (!$this->scores->contains($score)) {
             $this->scores[] = $score;
-            $score->setSoundPackageId($this);
+            $score->setSoundFile($this);
         }
 
         return $this;
@@ -215,8 +216,8 @@ class SoundPackage
     {
         if ($this->scores->removeElement($score)) {
             // set the owning side to null (unless already changed)
-            if ($score->getSoundPackageId() === $this) {
-                $score->setSoundPackageId(null);
+            if ($score->getSoundFile() === $this) {
+                $score->setSoundFile(null);
             }
         }
 
