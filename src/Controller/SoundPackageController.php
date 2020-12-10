@@ -9,6 +9,7 @@ use App\Entity\SoundPackage;
 use App\Entity\User;
 use App\Form\ScoreType;
 use App\Form\SoundPackageType;
+use App\Repository\ScoreRepository;
 use App\Repository\SoundPackageRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -38,7 +39,7 @@ class SoundPackageController extends Controller
         return $this->render("sound_package/index.html.twig", [
             'categories' => $this->getCategories(),
             'soundPackages' => $validSoundPackages,
-            'user' => $user
+            'user' => $user,
         ]);
     }
 
@@ -86,13 +87,20 @@ class SoundPackageController extends Controller
     /**
      * @Route("/{id}", name="view_sound_packages")
      */
-    public function view(SoundPackage $soundPackage)
+    public function view(SoundPackage $soundPackage, ScoreRepository $scoreRepository)
     {
+        $sound_id = $soundPackage->getId();
+            $scoreList = $scoreRepository->findBy([
+                'sound_file' => $soundPackage,
+                'user_id' => $this->getUser(),
+            ]);
         return $this->render("sound_package/view.html.twig", [
             'categories' => $this->getCategories(),
             'user' => $this->getUser(),
             'soundPackage' => $soundPackage,
-            'scoreForm' => $this->createForm(ScoreType::class)->createView()
+            'scoreForm' => $this->createForm(ScoreType::class)->createView(),
+            'soundId' => $sound_id,
+            'scores' => $scoreList
         ]);
     }
 
@@ -124,8 +132,10 @@ class SoundPackageController extends Controller
     /**
      * @Route("/score/submit", name="sound_package_submit_score")
      */
-    public function submit(Request $request, UserRepository $repository)
+    public function submit(Request $request, UserRepository $repository, SoundPackageRepository $soundPackageRepository)
     {
+        $id = (int) $request->get('sound_id');
+        $soundPackage = $soundPackageRepository->findOneBy(['id' => $id]);
         $entityManager = $this->getDoctrine()->getManager();
         $scoreForm = $request->request->get("score");
         $score = $scoreForm['score'];
@@ -135,7 +145,7 @@ class SoundPackageController extends Controller
         {
             $user = $repository->findOneBy(['id' => $userId]);
 
-            $scoreObject = new Score($score, $user);
+            $scoreObject = new Score($score, $user, $soundPackage);
             $entityManager->persist($scoreObject);
             $entityManager->flush();
         }

@@ -27,11 +27,17 @@ class Score
      */
     private $user_id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=SoundPackage::class, inversedBy="scores")
+     */
+    private $sound_file;
 
-    public function __construct(int $score, User $user)
+
+    public function __construct(int $score, User $user, SoundPackage $soundPackage)
     {
         $this->score = $score;
         $this->user_id = $user;
+        $this->sound_file = $soundPackage;
     }
 
     public function getId(): ?int
@@ -47,5 +53,22 @@ class Score
     public function getUserId(): ?User
     {
         return $this->user_id;
+    }
+
+    public function getSoundFile(): ?SoundPackage
+    {
+        return $this->sound_file;
+    }
+
+    public function setSoundFile(?SoundPackage $sound_file): self
+    {
+        $this->sound_file = $sound_file;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return (string)$this->getScore();
     }
 }
