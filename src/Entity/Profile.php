@@ -30,12 +30,22 @@ class Profile
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $beginner;
+    private $level;
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="profile", cascade={"persist", "remove"})
      */
     private $user_id;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isProfessional;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $timeSingingInYears;
 
     public function getId(): ?int
     {
@@ -66,14 +76,14 @@ class Profile
         return $this;
     }
 
-    public function getBeginner(): ?string
+    public function getLevel(): ?string
     {
-        return $this->beginner;
+        return $this->level;
     }
 
-    public function setBeginner(?string $beginner): self
+    public function setLevel(?string $level): self
     {
-        $this->beginner = $beginner;
+        $this->level = $level;
 
         return $this;
     }
@@ -86,6 +96,30 @@ class Profile
     public function setUserId(?User $user_id): self
     {
         $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getIsProfessional(): ?bool
+    {
+        return $this->isProfessional;
+    }
+
+    public function setIsProfessional(bool $isProfessional): self
+    {
+        $this->isProfessional = $isProfessional;
+
+        return $this;
+    }
+
+    public function getTimeSingingInYears(): ?int
+    {
+        return $this->timeSingingInYears;
+    }
+
+    public function setTimeSingingInYears(int $timeSingingInYears): self
+    {
+        $this->timeSingingInYears = $timeSingingInYears;
 
         return $this;
     }

@@ -1,8 +1,9 @@
 const playButtonId = "play";
 
-navigator.getUserMedia = navigator.getUserMedia ||
+navigator.getUserMedia = ( navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia;
+    navigator.mozGetUserMedia ||
+    navigator.msGetUserMedia);
 
 audioUrl = document.currentScript.getAttribute("data-file-path");
 userId = document.currentScript.getAttribute("data-user-id");
@@ -198,6 +199,7 @@ function handleVoiceRecordingAndDrawing() {
             function (stream) {
                 document.getElementById(playButtonId).onclick = function () {
                     successCallback(stream);
+                    navigator.vibrate(vibrationPattern);
 
                     document.getElementById(playButtonId).onclick = null;
                 }
@@ -208,28 +210,4 @@ function handleVoiceRecordingAndDrawing() {
     } else {
         console.log("getUserMedia not supported");
     }
-}
-
-// -     ----------------------------------------------------------------
-
-canvas.onmousewheel = function (event){
-    var mousex = event.clientX - canvas.offsetLeft;
-    var mousey = event.clientY - canvas.offsetTop;
-    var wheel = event.wheelDelta/120;//n or -n
-
-    var zoom = 1 + wheel/2;
-
-    context.translate(
-        originx,
-        originy
-    );
-    context.scale(zoom,zoom);
-    context.translate(
-        -( mousex / scale + originx - mousex / ( scale * zoom ) ),
-        -( mousey / scale + originy - mousey / ( scale * zoom ) )
-    );
-
-    originx = ( mousex / scale + originx - mousex / ( scale * zoom ) );
-    originy = ( mousey / scale + originy - mousey / ( scale * zoom ) );
-    scale *= zoom;
 }

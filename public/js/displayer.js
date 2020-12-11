@@ -1,13 +1,15 @@
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 let audioContext = new AudioContext();
-
+let vibrationPattern = [];
 let displayerPoints = [];
+let duration = 0;
 
 const drawAudio = url => {
     fetch(url)
         .then(response => response.arrayBuffer())
         .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
-        .then(audioBuffer => drawSeq(normalizeData(filterData(audioBuffer))));
+        .then(audioBuffer => {duration = audioBuffer.duration; return audioBuffer})
+        .then(audioBuffer => handleWave(normalizeData(filterData(audioBuffer))));
 };
 
 const filterData = audioBuffer => {
@@ -28,7 +30,6 @@ const filterData = audioBuffer => {
 };
 
 const normalizeData = filteredData => {
-    debugger
     const multiplier = Math.pow(Math.max(...filteredData), -1);
     return filteredData.map(n => n * multiplier);
 }
@@ -93,8 +94,7 @@ function draw(ctx, points) {
 
 }
 
-const drawSeq = normalizeData => {
-    debugger
+function drawSeq(normalizeData) {
     let canvas = document.querySelector("canvas");
     let ctx = canvas.getContext("2d");
     let centerX = canvas.width / 2;
@@ -105,6 +105,39 @@ const drawSeq = normalizeData => {
     const points = getPoints(normalizeData, centerY);
     displayerPoints = points;
     draw(ctx, points);
+}
+
+function setupVibration(normalizeData) {
+    let count = normalizeData.reduce((a, b) => a + b, 0)
+
+
+    let durationx = duration*1000
+
+    let buckets = durationx / 50;
+
+    let thingsPerBatch = Math.floor(normalizeData.length / buckets)
+
+    let result = [];
+    let lastI = 0;
+    for (let i = 0; i < normalizeData.length; i+=thingsPerBatch) {
+        result.push(normalizeData.slice(lastI, i).reduce((a, b) => a + b, 0));
+        lastI = i;
+    }
+
+    for (let i = 0; i < result.length; i++) {
+        result[i] = result[i]*200;
+    }
+
+    vibrationPattern = result.reduce((r, a) => r.concat(Math.round(a), 50), []);
+    let vibrationPatternDurationMs = vibrationPattern.reduce((a, b) => a + b, 0)
+
+    // vibrationPattern = [500,100,100,405,540,10,400,10];
+    debugger
+}
+
+const handleWave = normalizeData => {
+    drawSeq(normalizeData);
+    setupVibration(normalizeData);
 }
 
 

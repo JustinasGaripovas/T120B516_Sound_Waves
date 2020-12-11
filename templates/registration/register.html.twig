@@ -21,6 +21,12 @@
                     {{ form_row(registrationForm.plainPassword, {
                         label: 'Password'
                     }) }}
+                    {{ form_row(registrationForm.profile.gender) }}
+                    {{ form_row(registrationForm.profile.age) }}
+                    {{ form_row(registrationForm.profile.level) }}
+                    {{ form_row(registrationForm.profile.isProfessional) }}
+                    {{ form_row(registrationForm.profile.timeSingingInYears) }}
+
                     {{ form_row(registrationForm.agreeTerms) }}
                 </div>
                 <br>

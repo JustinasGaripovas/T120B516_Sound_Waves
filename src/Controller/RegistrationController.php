@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Profile;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthenticator;
@@ -20,10 +21,20 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
         $user = new User();
+        $profile = new Profile();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $user */
+            $user = $form->getData();
+
+            /** @var Profile $profile */
+            $profile = $user->getProfile();
+            $profile->setUserId($user);
+
+            $user->setProfile($profile);
+
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
