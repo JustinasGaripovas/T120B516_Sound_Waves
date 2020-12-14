@@ -22,7 +22,7 @@
                         <table class="table">
                             <tr class="thead-dark">
                                 <th scope="col">Nr.</th>
-                                <th scope="col">Score</th>
+                                <th scope="col">Score (lower is better)</th>
                             </tr>
                             {% for score in scores %}
                             <tr>
@@ -40,7 +40,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="/js/displayer.js" data-file-path="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ path("get_sound_file", {id:soundPackage.id}) }}"></script>
+    <script src="/js/displayer.js" data-sound-package-id="{{ soundPackage.id }}" data-file-path="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ path("get_sound_file", {id:soundPackage.id}) }}"></script>
     <script src="/js/recorder.js" data-sound-package-id="{{ soundPackage.id }}" data-user-id="{{ app.user?user.id:null }}" data-file-path="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ path("get_sound_file", {id:soundPackage.id}) }}"></script>
     {{ parent() }}
 {% endblock %}

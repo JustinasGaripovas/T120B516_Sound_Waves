@@ -3,6 +3,7 @@ let audioContext = new AudioContext();
 let vibrationPattern = [];
 let displayerPoints = [];
 let duration = 0;
+let id = document.currentScript.getAttribute("data-sound-package-id");
 
 const drawAudio = url => {
     fetch(url)
@@ -14,7 +15,16 @@ const drawAudio = url => {
 
 const filterData = audioBuffer => {
     const rawData = audioBuffer.getChannelData(0);
-    const samples = Math.floor(canvas.width / 2);
+    let samples = 120;
+    if(id == 3)
+    {
+        samples = 120;
+    }else if(id == 4)
+    {
+        samples = 400;
+        debugger
+    }
+    debugger
 
     const blockSize = Math.floor(rawData.length / samples);
     const filteredData = [];
